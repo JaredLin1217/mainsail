@@ -17,8 +17,13 @@ const PWAConfig: Partial<VitePWAOptions> = {
     registerType: 'autoUpdate',
     includeAssets: ['fonts/**/*.woff2', 'img/**/*.svg', 'img/**/*.png'],
     manifest: {
-        name: 'Mainsail',
-        short_name: 'Mainsail',
+        name: 'INLONG',
+        short_name: 'INLONG',
+        description: 'INLONG web app optimized for installation on Chrome/Edge.',
+        scope: '/',
+        start_url: '/',
+        display: 'standalone',
+        id: '/?source=pwa',
         theme_color: '#D51F26',
         background_color: '#121212',
         icons: [
