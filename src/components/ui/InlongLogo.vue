@@ -1,3 +1,4 @@
+<template>
 <svg
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
@@ -7,8 +8,6 @@
   viewBox="0 0 599.38 523.11"
   xml:space="preserve">
   <g>
-  
-    <rect style="fill: #fff;" width="599.38" height="523.11"/>
     <rect style="fill:#494949;" x="11" y="212.59" width="25.97" height="121.88"/>
     <polygon style="fill:#494949;" points="163.06 212.59 63.82 212.59 59.3 212.59 59.3 334.47 85.27 334.47 85.27 238.56 137.44 238.56 137.44 334.47 163.4 334.47 163.4 212.59 163.06 212.59"/>
     <polygon style="fill:#494949;" points="464.22 212.59 364.98 212.59 360.46 212.59 360.46 334.47 386.43 334.47 386.43 238.56 438.6 238.56 438.6 334.47 464.56 334.47 464.56 212.59 464.22 212.59"/>
@@ -17,3 +16,28 @@
     <polygon style="fill:#d66c47;" points="257.7 310.33 207.77 310.33 207.77 187.53 180.96 187.53 180.96 336.47 257.7 336.47 257.7 310.33"/>
   </g>
 </svg>
+</template>
+
+<script lang="ts">
+import Component from 'vue-class-component'
+import { Mixins, Prop, Watch } from 'vue-property-decorator'
+import BaseMixin from '../mixins/base'
+import { defaultLogoColor } from '@/store/variables'
+
+@Component
+export default class InlongLogo extends Mixins(BaseMixin) {
+    private internalColor = defaultLogoColor
+
+    @Prop({ required: false, default: '' })
+    declare readonly color: string
+
+    @Watch('color')
+    colorChanged(newVal: string) {
+        this.internalColor = newVal !== '' ? newVal : defaultLogoColor
+    }
+
+    created() {
+        if (this.color !== '') this.internalColor = this.color
+    }
+}
+</script>
