@@ -17,14 +17,14 @@ const PWAConfig: Partial<VitePWAOptions> = {
     registerType: 'autoUpdate',
     includeAssets: ['fonts/**/*.woff2', 'img/**/*.svg', 'img/**/*.png'],
     manifest: {
-        name: 'INLONG',
-        short_name: 'INLONG',
-        description: 'INLONG web app optimized for installation on Chrome/Edge.',
+        name: 'INLONG 3D',
+        short_name: 'INLONG 3D',
+        description: 'INLONG 3D web app optimized for installation on Chrome/Edge.',
         scope: '/',
         start_url: '/',
         display: 'standalone',
         id: '/?source=pwa',
-        theme_color: '#D51F26',
+        theme_color: '#D66C47',
         background_color: '#121212',
         icons: [
             {
