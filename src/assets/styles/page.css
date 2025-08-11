@@ -121,6 +121,7 @@ html.theme--light {
 
 html.theme--light body {
     background: #ffffff !important;
+    scrollbar-color: rgba(0, 0, 0, 0.55) #ffffff;
 }
 
 html.theme--light ::-webkit-scrollbar {

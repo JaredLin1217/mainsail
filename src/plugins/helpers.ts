@@ -164,7 +164,7 @@ export const sortFiles = (items: FileStateFile[] | null, sortBy: string[], sortD
             if (b[sortBySingle] === null || b[sortBySingle] === undefined) return 1
 
             if (a[sortBySingle].constructor === String && b[sortBySingle].constructor === String) {
-                return a[sortBySingle].localeCompare(b[sortBySingle], undefined, { sensivity: 'base' })
+                return a[sortBySingle].toString().localeCompare(b[sortBySingle].toString(), undefined, { sensitivity: 'base' })
             }
 
             if (a[sortBySingle] instanceof Array && b[sortBySingle] instanceof Array) {

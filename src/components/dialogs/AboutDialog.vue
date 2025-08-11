@@ -6,13 +6,13 @@
             </v-icon>
         </template>
         <v-container class="version-container pa-0">
-            <div><img height="12" src="/img/logo.svg" alt="mainsail-logo" /></div>
+            <div><img height="12" src="/img/logo.svg" alt="inlong-logo" /></div>
             <div>v{{ mainsailVersion }}</div>
             <div>
                 <v-icon small class="moonraker-logo">{{ mdiMoonWaningCrescent }}</v-icon>
             </div>
             <div>{{ moonrakerVersion }}</div>
-            <div><img height="12" src="/img/klipper.svg" class="klipper-logo" alt="klipper-logo" /></div>
+            <div><img height="12" src="/img/logo.svg" class="inlong-logo" alt="inlong-logo" /></div>
             <div>{{ klipperVersion }}</div>
         </v-container>
     </v-tooltip>

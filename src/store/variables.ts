@@ -1,10 +1,10 @@
 import { KlipperRepos, Theme } from '@/store/types'
 
-export const defaultMode = 'dark'
+export const defaultMode = 'light'
 export const defaultTheme = 'mainsail'
-export const defaultLogoColor = '#D41216'
-export const defaultPrimaryColor = '#2196f3'
-export const defaultBigThumbnailBackground = '#1e1e1e'
+export const defaultLogoColor = '#d66c47'
+export const defaultPrimaryColor = '#d66c47'
+export const defaultBigThumbnailBackground = '#dfdfdfff'
 
 export const minKlipperVersion = 'v0.11.0-257'
 export const minMoonrakerVersion = 'v0.8.0-306'
@@ -156,61 +156,13 @@ export const rolloverLogfiles = ['klipper', 'moonraker']
  * List of all Themes
  */
 export const themes: Theme[] = [
-    { name: 'mainsail', displayName: 'Mainsail', colorLogo: defaultLogoColor },
     {
-        name: 'klipper',
-        displayName: 'Klipper',
-        colorLogo: '#b12f35',
+        name: 'inlong',
+        displayName: 'INLONG 3D',
+        colorLogo: '#d66c47',
+        colorPrimary: '#d66c47',
         logo: { show: true, light: false },
-    },
-    {
-        name: 'voron',
-        displayName: 'Voron Design',
-        colorLogo: '#FF2300',
-        logo: { show: true, light: false },
-    },
-    {
-        name: 'ldo',
-        displayName: 'LDO Motion (Sponsor)',
-        colorLogo: '#326799',
-        colorPrimary: '#326799',
-        logo: { show: true, light: false },
-    },
-    {
-        name: 'yumi',
-        displayName: 'YUMI (Sponsor)',
-        colorLogo: '#F6CF3D',
-        colorPrimary: '#F6CF3D',
-        logo: { show: true, light: false },
-    },
-    {
-        name: 'vzbot',
-        displayName: 'VzBot',
-        colorLogo: '#FF0000',
-        logo: { show: true, light: false },
-        sidebarBackground: { show: true, light: false },
-        css: true,
-    },
-    {
-        name: 'prusa',
-        displayName: 'Prusa Research (Sponsor)',
-        colorLogo: '#fa6831',
-        colorPrimary: '#fa6831',
-        logo: { show: true, light: false },
-    },
-    {
-        name: 'btt',
-        displayName: 'BigTreeTech (Sponsor)',
-        colorLogo: '#ef0025',
-        logo: { show: true, light: false },
-    },
-    {
-        name: 'multec',
-        displayName: 'Multec GmbH (Sponsor)',
-        colorLogo: '#234D7A',
-        colorPrimary: '#234D7A',
-        logo: { show: true, light: false },
-    },
+    }
 ]
 
 /*

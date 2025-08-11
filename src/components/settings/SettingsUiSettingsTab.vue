@@ -9,68 +9,6 @@
                 </settings-row>
                 <v-divider class="my-2" />
                 <settings-row
-                    :title="$t('Settings.UiSettingsTab.Theme')"
-                    :sub-title="$t('Settings.UiSettingsTab.ThemeDescription')">
-                    <v-select v-model="themeName" :items="themes" class="mt-0" hide-details outlined dense />
-                </settings-row>
-                <v-divider class="my-2" />
-                <settings-row :title="$t('Settings.UiSettingsTab.Logo')">
-                    <v-btn
-                        v-if="logoColor.toLowerCase() !== defaultLogoColor.toLowerCase()"
-                        small
-                        text
-                        class="minwidth-0"
-                        @click="logoColor = defaultLogoColor">
-                        <v-icon small>{{ mdiRestart }}</v-icon>
-                    </v-btn>
-                    <v-menu bottom left offset-y :close-on-content-click="false">
-                        <template #activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" :color="logoColor" class="minwidth-0 px-5" small v-on="on" />
-                        </template>
-                        <v-color-picker
-                            :value="logoColor"
-                            hide-mode-switch
-                            mode="rgba"
-                            @update:color="updateLogoColor" />
-                    </v-menu>
-                </settings-row>
-                <v-divider class="my-2" />
-                <settings-row :title="$t('Settings.UiSettingsTab.Primary')">
-                    <v-btn
-                        v-if="primaryColor.toLowerCase() !== defaultPrimaryColor.toLowerCase()"
-                        small
-                        text
-                        class="minwidth-0"
-                        @click="primaryColor = defaultPrimaryColor">
-                        <v-icon small>{{ mdiRestart }}</v-icon>
-                    </v-btn>
-                    <v-menu bottom left offset-y :close-on-content-click="false">
-                        <template #activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" :color="primaryColor" class="minwidth-0 px-5" small v-on="on" />
-                        </template>
-                        <v-color-picker
-                            :value="primaryColor"
-                            hide-mode-switch
-                            mode="rgba"
-                            @update:color="updatePrimaryColor" />
-                    </v-menu>
-                </settings-row>
-                <v-divider class="my-2" />
-                <settings-row
-                    :title="$t('Settings.UiSettingsTab.GcodeThumbnails')"
-                    :sub-title="$t('Settings.UiSettingsTab.GcodeThumbnailsDescription')"
-                    :dynamic-slot-width="true">
-                    <v-btn
-                        outlined
-                        small
-                        color="primary"
-                        href="https://docs.mainsail.xyz/overview/features/thumbnails"
-                        target="_blank">
-                        {{ $t('Settings.UiSettingsTab.Guide') }}
-                    </v-btn>
-                </settings-row>
-                <v-divider class="my-2" />
-                <settings-row
                     :title="$t('Settings.UiSettingsTab.BoolBigThumbnail')"
                     :sub-title="$t('Settings.UiSettingsTab.BoolBigThumbnailDescription')"
                     :dynamic-slot-width="true">
@@ -381,13 +319,13 @@ export default class SettingsUiSettingsTab extends Mixins(BaseMixin, ThemeMixin)
     get modes() {
         return [
             {
-                text: this.$t('Settings.UiSettingsTab.ThemeDark'),
-                value: 'dark',
-            },
-            {
                 text: this.$t('Settings.UiSettingsTab.ThemeLight'),
                 value: 'light',
             },
+            {
+                text: this.$t('Settings.UiSettingsTab.ThemeDark'),
+                value: 'dark',
+            }
         ]
     }
 
