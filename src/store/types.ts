@@ -25,7 +25,7 @@ export interface RootStateDependency {
 }
 
 export interface ConfigJson {
-    defaultTheme?: 'dark' | 'light'
+    defaultTheme?: 'light' | 'dark'
     hostname?: string | null
     port?: string | number | null
     path?: string | null
