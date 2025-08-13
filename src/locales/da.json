@@ -694,7 +694,7 @@
             "EjectSpoolQuestion": "Er du sikker på du ønsker at afmontere spolen?",
             "Filament": "Filament",
             "FilamentTypeMismatch": "Materialet på den aktive spole({spoolType}) matcher ikke materialet i G-koden ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "SpoolMan",
             "LastUsed": "Sidst brugt",
             "Location": "Placering",
             "Material": "Materiale",

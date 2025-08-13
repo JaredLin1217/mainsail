@@ -619,7 +619,7 @@
             "EjectSpoolQuestion": "Czy na pewno wysunąć szpulę filamentu?",
             "Filament": "Filament",
             "FilamentTypeMismatch": "Materiał aktywnej szpuli ({spoolType}) nie jest zgodny z materiałem G-Code ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "Śledzenie filamentu",
             "LastUsed": "Ostatnie użycie",
             "Location": "Lokalizacja",
             "Material": "Materiał",

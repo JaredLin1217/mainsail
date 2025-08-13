@@ -694,7 +694,7 @@
             "EjectSpoolQuestion": "Ви впевнені, що хочете прибрати шпулю з філаментом?",
             "Filament": "Філамент",
             "FilamentTypeMismatch": "Матеріал активної шпулі ({spoolType}) не збігається з матеріалом G-коду ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "Менеджер Шпуль",
             "LastUsed": "Останнє використання",
             "Location": "Місцезнаходження",
             "Material": "Матеріал",

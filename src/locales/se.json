@@ -628,7 +628,7 @@
             "EjectSpoolQuestion": "Är du säker på att du matar ut filamentspolen?",
             "Filament": "Filament",
             "FilamentTypeMismatch": "Materialet i den aktiva spoolen ({spoolType}) matchar inte materialet i G-koden ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "Spolehantering",
             "LastUsed": "Senast använd",
             "Location": "Plats",
             "Material": "Material",

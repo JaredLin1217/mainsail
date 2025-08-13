@@ -636,7 +636,7 @@
             "EjectSpoolQuestion": "Êtes-vous sûr de vouloir éjecter la bobine de filament?",
             "Filament": "Filament",
             "FilamentTypeMismatch": "Le matériau de la bobine active ({spoolType}) ne correspond pas au matériau du G-Code ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "Gestionnaire de bobines",
             "LastUsed": "Dernière utilisation",
             "Location": "Localisation",
             "Material": "Matériau",

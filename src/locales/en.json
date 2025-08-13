@@ -951,7 +951,7 @@
             "EjectSpoolQuestion": "Are you sure to eject the filament spool?",
             "Filament": "Filament",
             "FilamentTypeMismatch": "The material of the active spool ({spoolType}) does not match the material of the G-Code ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "Spool Manager",
             "LastUsed": "Last Used",
             "Location": "Location",
             "Material": "Material",

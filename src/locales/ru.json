@@ -713,7 +713,7 @@
             "EjectSpoolQuestion": "Вы уверены, что хотите извлечь катушку с прутком?",
             "Filament": "Пруток",
             "FilamentTypeMismatch": "Материал выбранной катушки ({spoolType}) не соответствует материалу в G-коде ({fileType}).",
-            "Headline": "Spoolman",
+            "Headline": "Управление прутками",
             "LastUsed": "Последнее использование",
             "Location": "Слот",
             "Material": "Материал",

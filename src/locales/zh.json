@@ -714,7 +714,7 @@
             "EjectSpoolQuestion": "你确定要弹出料盘吗？",
             "Filament": "耗材",
             "FilamentTypeMismatch": "已激活料盘的材料({spoolType})与G-Code的材料({fileType})不匹配。",
-            "Headline": "Spoolman",
+            "Headline": "料盘追踪",
             "LastUsed": "最后使用",
             "Location": "位置",
             "Material": "材料",
