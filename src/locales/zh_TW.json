@@ -870,7 +870,7 @@
             "EjectSpoolQuestion": "您確定要退出耗材線捲嗎？",
             "Filament": "耗材",
             "FilamentTypeMismatch": "使用中的線捲材質 ({spoolType}) 與 G-Code 材質 ({fileType}) 不符。",
-            "Headline": "Spoolman",
+            "Headline": "料盤追蹤",
             "LastUsed": "最後使用",
             "Location": "位置",
             "Material": "材料",
