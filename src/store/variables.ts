@@ -12,8 +12,8 @@ export const minBrowserVersions = [{ name: 'safari', version: '16.5.2' }]
 
 export const colorArray = ['#F44336', '#8e379d', '#03DAC5', '#3F51B5', '#ffde03', '#009688', '#E91E63']
 
-export const colorHeaterBed = '#2196F3'
-export const colorChamber = '#4CAF50'
+export const colorHeaterBed = '#ce7603ff'
+export const colorChamber = '#eeeb2eff'
 export const opacityHeaterActive = '99'
 export const opacityHeaterInactive = '44'
 export const themeDir = '.theme'
@@ -116,9 +116,9 @@ export const thumbnailSmallMax = 64
 export const thumbnailBigMin = 128
 
 export const navigationWidth = 220
-export const navigationItemHeight = 48
-export const panelToolbarHeight = 48
-export const topbarHeight = 48
+export const navigationItemHeight = 56
+export const panelToolbarHeight = 56
+export const topbarHeight = 56
 
 /*
  * List of hidden timelapse console outputs

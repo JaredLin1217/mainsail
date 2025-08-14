@@ -3,9 +3,7 @@
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  x="0px"
-  y="0px"
-  viewBox="0 0 599.38 523.11"
+  viewBox="01 177.53 600 178.94"
   xml:space="preserve">
   <g>
     <rect style="fill:#494949;" x="11" y="212.59" width="25.97" height="121.88"/>

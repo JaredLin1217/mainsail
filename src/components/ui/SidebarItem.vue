@@ -10,7 +10,7 @@
                     class="small-list-item"
                     v-bind="attrs"
                     v-on="on">
-                    <v-list-item-icon class="my-3 mr-3 menu-item-icon">
+                    <v-list-item-icon class="my-4 mr-4 menu-item-icon">
                         <v-icon>{{ icon }}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>

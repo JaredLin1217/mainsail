@@ -359,7 +359,12 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
     const fallback =
       'data:image/svg+xml;base64,' +
       window.btoa(`
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 599.38 523.11">
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="01 177.53 600 178.94"
+            xml:space="preserve">
           <g>
             <rect style="fill:#fff;" width="599.38" height="523.11"/>
             <rect style="fill:#494949;" x="11" y="212.59" width="25.97" height="121.88"/>

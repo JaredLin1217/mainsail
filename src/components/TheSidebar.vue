@@ -155,7 +155,7 @@ export default class TheSidebar extends Mixins(NavigationMixin, BaseMixin, Theme
 }
 
 .nav-logo {
-    height: 32px;
+    height: 60px;
 }
 
 .menu-item-icon {
