@@ -944,7 +944,7 @@ export default class Viewer extends Mixins(BaseMixin) {
     }
 
     get backgroundColor() {
-        return this.$store.state.gui.gcodeViewer?.backgroundColor ?? '#121212'
+        return this.$store.state.gui.gcodeViewer?.backgroundColor ?? '#f5f5f5'
     }
 
     @Watch('backgroundColor')
