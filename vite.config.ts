@@ -25,7 +25,7 @@ const PWAConfig: Partial<VitePWAOptions> = {
         display: 'standalone',
         id: '/?source=pwa',
         theme_color: '#D66C47',
-        background_color: '#121212',
+        background_color: '#f5f5f5',
         icons: [
             {
                 src: '/img/icons/icon-192-maskable.png',
@@ -57,7 +57,7 @@ const PWAConfig: Partial<VitePWAOptions> = {
                 },
             },
         ],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,  //jared
     },
     /* enable sw on development */
     devOptions: {
