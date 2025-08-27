@@ -728,7 +728,19 @@
         "Machine": "Makine",
         "Printers": "Yazıcılar",
         "Timelapse": "Timelapse",
-        "Webcam": "Web Kamerası"
+        "Webcam": "Web Kamerası",
+        "Spoolman": "Spoolman",
+        "APmode": "AP Modu"
+    },
+    "Spoolman": {
+        "Opening": "Açılıyor...",
+        "PopupBlocked": "Popup engellendi! Lütfen tarayıcı ayarlarınızı kontrol edin.",
+        "OpenManually": "Manuel olarak aç"
+    },    
+    "APmode": {
+        "Opening": "Opening...",
+        "PopupBlocked": "Popup blocked! Please check your browser settings.",
+        "OpenManually": ""
     },
     "ScrewsTiltAdjust": {
         "Accept": "Kabul Et",

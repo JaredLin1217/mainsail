@@ -838,7 +838,19 @@
         "Machine": "Printer",
         "Printers": "Printere",
         "Timelapse": "Timelapse",
-        "Webcam": "Webcam"
+        "Webcam": "Webcam",
+        "Spoolman": "SpoolMan",
+        "APmode": "AP-tilstand"
+    },
+    "Spoolman": {
+        "Opening": "Åbner... Hvis popup-blokkeren er aktiveret, skal du muligvis åbne SpoolMan manuelt {openManually}",
+        "PopupBlocked": "Popup blokeret! Åbn SpoolMan manuelt {openManually}",
+        "OpenManually": "her"
+    },
+    "APmode": {
+        "Opening": "Åbner... Hvis popup-blokkeren er aktiveret, skal du muligvis åbne AP-tilstand manuelt {openManually}",
+        "PopupBlocked": "Popup blokeret! Åbn AP-tilstand manuelt {openManually}",
+        "OpenManually": "her"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Acceptér",

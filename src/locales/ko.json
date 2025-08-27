@@ -688,7 +688,19 @@
         "Machine": "프린터 설정",
         "Printers": "원격 프린터",
         "Timelapse": "타임랩스",
-        "Webcam": "웹캠"
+        "Webcam": "웹캠",
+        "Spoolman": "스풀맨",
+        "APmode": "AP 모드"
+    },
+    "Spoolman": {
+        "Opening": "열기..",
+        "PopupBlocked": "팝업 차단됨",
+        "OpenManually": "수동으로 열기"
+    },    
+    "APmode": {
+        "Opening": "열기..",
+        "PopupBlocked": "팝업 차단됨",
+        "OpenManually": "수동으로 열기"
     },
     "ScrewsTiltAdjust": {
         "Accept": "확인",

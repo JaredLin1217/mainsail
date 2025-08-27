@@ -772,7 +772,19 @@
         "Machine": "Maskin",
         "Printers": "Skrivare",
         "Timelapse": "Timelapse",
-        "Webcam": "Webbkamera"
+        "Webcam": "Webbkamera",
+        "Spoolman": "Spoolman",
+        "APmode": "AP-läge"
+    },
+    "Spoolman": {
+        "Opening": "Öppnar...",
+        "PopupBlocked": "Popup blockerad",
+        "OpenManually": "Öppna manuellt"
+    },    
+    "APmode": {
+        "Opening": "Öppnar...",
+        "PopupBlocked": "Popup blockerad",
+        "OpenManually": "Öppna manuellt"
     },
     "ScrewsTiltAdjust": {
         "Accept": "godkänn",

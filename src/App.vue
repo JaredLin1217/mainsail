@@ -113,7 +113,7 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
       '--panel-toolbar-icon-btn-width': panelToolbarHeight + 'px',
       '--panel-toolbar-text-btn-height': panelToolbarHeight + 'px',
       '--topbar-icon-btn-width': topbarHeight + 'px',
-      '--sidebar-menu-item-height': navigationItemHeight + 'px',
+      '--sidebar-menu-item-height': navigationItemHeight + 'px'
     }
   }
 
@@ -144,7 +144,7 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
     }
     // overwrite padding left for the sidebar
     if (this.naviDrawer && !this.$vuetify.breakpoint.mdAndDown) {
-      if (this.navigationStyle === 'iconsAndText') style.paddingLeft = '220px'
+      if (this.navigationStyle === 'iconsAndText') style.paddingLeft = '165px'
       if (this.navigationStyle === 'iconsOnly') style.paddingLeft = '56px'
     }
     return style

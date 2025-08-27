@@ -838,7 +838,19 @@
         "Machine": "Машина",
         "Printers": "Принтери",
         "Timelapse": "Таймлапс",
-        "Webcam": "Веб-камера"
+        "Webcam": "Веб-камера",
+        "SpoolMan": "Менеджер Шпуль",
+        "APmode": "AP режим"
+    },
+    "Spoolman": {
+        "Opening": "Açılıyor...",
+        "PopupBlocked": "Popup engellendi! Lütfen tarayıcı ayarlarınızı kontrol edin.",
+        "OpenManually": "Manuel olarak aç"
+    },    
+    "APmode": {
+        "Opening": "Відкривається...",
+        "PopupBlocked": "Відкриття спливаючого вікна заблоковано! Будь ласка, перевірте налаштування браузера.",
+        "OpenManually": "Відкрити вручну"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Прийняти",

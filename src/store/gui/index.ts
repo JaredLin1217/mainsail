@@ -127,7 +127,7 @@ export const getDefaultState = (): GuiState => {
         gcodeViewer: {
             extruderColors: ['#E76F51FF', '#F4A261FF', '#E9C46AFF', '#2A9D8FFF', '#264653FF'],
             gridColor: '#B3B3B3',
-            backgroundColor: '#121212',
+            backgroundColor: '#f5f5f5',
             colorMode: 2,
             showAxes: true,
             minFeed: 20,

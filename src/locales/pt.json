@@ -694,7 +694,19 @@
         "Machine": "Máquina",
         "Printers": "Impressoras",
         "Timelapse": "Lapso de tempo",
-        "Webcam": "Webcam"
+        "Webcam": "Webcam",
+        "Spoolman": "Spoolman",
+        "APmode": "AP mode"
+    },
+    "Spoolman": {
+        "Opening": "Abrindo...",
+        "PopupBlocked": "Popup bloqueado pelo navegador. Por favor, permita popups para este site.",
+        "OpenManually": "Abrir manualmente"
+    },    
+    "APmode": {
+        "Opening": "Abrindo...",
+        "PopupBlocked": "Popup bloqueado pelo navegador. Por favor, permita popups para este site.",
+        "OpenManually": "Abrir manualmente"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Aceitar",

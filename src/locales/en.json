@@ -1104,7 +1104,19 @@
         "Machine": "Machine",
         "Printers": "Printers",
         "Timelapse": "Timelapse",
-        "Webcam": "Webcam"
+        "Webcam": "Webcam",
+        "Spoolman": "Spoolman",
+        "APmode": "AP Mode"
+    },
+    "Spoolman": {
+        "Opening": "Reading Spoolman config and opening in a new tab…",
+        "PopupBlocked": "If your browser blocked the popup,",
+        "OpenManually": "click here to open Spoolman manually"
+    },
+    "APmode": {
+        "Opening": "Opening AP mode page...",
+        "PopupBlocked": "Popup was blocked. Please allow popups or open the AP mode page manually.",
+        "OpenManually": "Open AP mode page manually."
     },
     "ScrewsTiltAdjust": {
         "Accept": "accept",

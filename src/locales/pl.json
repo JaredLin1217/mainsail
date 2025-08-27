@@ -759,7 +759,19 @@
         "Machine": "Drukarka",
         "Printers": "Drukarki",
         "Timelapse": "Timelapse",
-        "Webcam": "Kamera internetowa"
+        "Webcam": "Kamera internetowa",
+        "Spoolman": "Menedżer szpul",
+        "APmode": "Tryb AP"
+    },
+    "Spoolman": {
+        "Opening": "Otwieranie menedżera szpul... Proszę czekać.",
+        "PopupBlocked": "Wyskakujące okienko zostało zablokowane. Proszę zezwolić na wyskakujące okienka dla tej strony.",
+        "OpenManually": "Proszę otworzyć menedżera szpul ręcznie z menu głównego."
+    },    
+    "APmode": {
+        "Opening": "Uruchamianie trybu AP... Proszę czekać.",
+        "PopupBlocked": "Okno trybu AP zostało zablokowane. Proszę zezwolić na wyskakujące okienka dla tej strony.",
+        "OpenManually": "Proszę otworzyć tryb AP ręcznie z menu głównego."
     },
     "ScrewsTiltAdjust": {
         "Accept": "Akceptuj",

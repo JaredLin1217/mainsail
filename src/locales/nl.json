@@ -745,7 +745,19 @@
         "Machine": "Machine",
         "Printers": "Printers",
         "Timelapse": "Timelapse",
-        "Webcam": "Webcam"
+        "Webcam": "Webcam",
+        "Spoolman": "Spoolman",
+        "APmode": "Access Point Modus"
+    },
+    "Spoolman": {
+        "Opening": "Bezig met openen...",
+        "PopupBlocked": "Popup geblokkeerd!",
+        "OpenManually": "Open Spoolman handmatig in een nieuw tabblad."
+    },    
+    "APmode": {
+        "Opening": "Bezig met openen...",
+        "PopupBlocked": "Popup geblokkeerd!",
+        "OpenManually": "Open de Access Point modus handmatig in een nieuw tabblad."
     },
     "ScrewsTiltAdjust": {
         "Accept": "accepteer",

@@ -857,7 +857,19 @@
         "Machine": "Máquina",
         "Printers": "Impresoras",
         "Timelapse": "Timelapse",
-        "Webcam": "Cámara web"
+        "Webcam": "Cámara web",
+        "Spoolman": "Gestor de carretes",
+        "APmode": "Modo AP"
+    },
+    "Spoolman": {
+        "Opening": "Abriendo...",
+        "PopupBlocked": "¡Ventana emergente bloqueada! Por favor, permita las ventanas emergentes para este sitio.",
+        "OpenManually": "Abrir manualmente"
+    },
+    "APmode": {
+        "Opening": "Abriendo...",
+        "PopupBlocked": "¡Ventana emergente bloqueada! Por favor, permita las ventanas emergentes para este sitio.",
+        "OpenManually": "Abrir manualmente"
     },
     "ScrewsTiltAdjust": {
         "Accept": "aceptar",

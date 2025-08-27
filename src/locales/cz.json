@@ -866,7 +866,19 @@
         "Machine": "Tiskárna",
         "Printers": "Tiskárny",
         "Timelapse": "Time-lapse",
-        "Webcam": "Webkamera"
+        "Webcam": "Webkamera",
+        "Spoolman": "Spoolman",
+        "APmode": "AP režim"
+    },
+    "Spoolman": {
+        "Opening": "Otevírám...",
+        "PopupBlocked": "Vyskakovací okno bylo zablokováno. Prosím povolte vyskakovací okna pro tuto stránku.",
+        "OpenManually": "Otevřít ručně"
+    },
+    "APmode": {
+        "Opening": "Otevírám...",
+        "PopupBlocked": "Vyskakovací okno bylo zablokováno. Prosím povolte vyskakovací okna pro tuto stránku.",
+        "OpenManually": "Otevřít ručně"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Přijmout",

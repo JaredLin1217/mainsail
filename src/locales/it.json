@@ -859,7 +859,19 @@
         "Machine": "Macchina",
         "Printers": "Stampanti",
         "Timelapse": "Timelapse",
-        "Webcam": "Webcam"
+        "Webcam": "Webcam",
+        "Spoolman": "Gestione Bobine",
+        "APmode": "AP Mode"
+    },
+    "Spoolman": {
+        "Opening": "Apertura",
+        "PopupBlocked": "Popup bloccato",
+        "OpenManually": "Apri manualmente"
+    },
+    "APmode": {
+        "Opening": "Aprendo",
+        "PopupBlocked": "Popup bloccato",
+        "OpenManually": "Apri manualmente"
     },
     "ScrewsTiltAdjust": {
         "Accept": "accetta",

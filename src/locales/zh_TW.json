@@ -727,7 +727,19 @@
         "Machine": "機器設備",
         "Printers": "列印機",
         "Timelapse": "縮時攝影",
-        "Webcam": "網絡攝影機"
+        "Webcam": "網絡攝影機",
+        "Spoolman": "料盤管理",
+        "APmode": "AP模式"
+    },
+    "Spoolman": {
+        "Opening": "正在打開料盤管理...",
+        "PopupBlocked": "彈出窗口被阻止。請允許彈出窗口以使用料盤管理。",
+        "OpenManually": "請手動打開料盤管理。"
+    },    
+    "APmode": {
+        "Opening": "正在打開AP模式頁面...",
+        "PopupBlocked": "彈出窗口被阻止。請允許彈出窗口以使用AP模式。",
+        "OpenManually": "請手動打開AP模式頁面。"
     },
     "ScrewsTiltAdjust": {
         "Accept": "接受",
@@ -874,7 +886,7 @@
             "RestoreDialog": "請選擇所有你想要復原的部分:",
             "TimeFormat": "時間格式"
         },
-        "InterfaceSettings": "介面設定",
+        "InterfaceSettings": "界面設定",
         "MacrosTab": {
             "Add": "新增",
             "AddGroup": "新增分組",

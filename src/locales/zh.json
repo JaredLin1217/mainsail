@@ -866,7 +866,19 @@
         "Machine": "机器",
         "Printers": "打印机",
         "Timelapse": "延时摄影",
-        "Webcam": "摄像头"
+        "Webcam": "摄像头",
+        "Spoolman": "料盘追踪",
+        "APmode": "AP模式"
+    },
+    "Spoolman": {
+        "Opening": "正在打开料盘追踪后台...",
+        "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开料盘追踪后台。",
+        "OpenManually": "手动打开料盘追踪后台。"
+    },
+    "APmode": {
+        "Opening": "正在打开AP模式页面...",
+        "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开AP模式页面。",
+        "OpenManually": "手动打开AP模式页面。"
     },
     "ScrewsTiltAdjust": {
         "Accept": "接受",
@@ -1047,7 +1059,7 @@
                 "Spring": "春季色调"
             }
         },
-        "InterfaceSettings": "Mainsail设置",
+        "InterfaceSettings": "介面设定",
         "MacrosTab": {
             "Add": "添加",
             "AddGroup": "添加分组",

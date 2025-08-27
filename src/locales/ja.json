@@ -687,7 +687,19 @@
         "Machine": "機器",
         "Printers": "プリンター",
         "Timelapse": "タイムラプス",
-        "Webcam": "カメラ"
+        "Webcam": "カメラ",
+        "Spoolman": "スプールマネージャー",
+        "APmode": "APモード"
+    },
+    "Spoolman": {
+        "Opening": "開いています...",
+        "PopupBlocked": "ポップアップがブロックされました。ブラウザの設定を確認してください。",
+        "OpenManually": "手動で開く"
+    },
+    "APmode": {
+        "Opening": "開いています...",
+        "PopupBlocked": "ポップアップがブロックされました。ブラウザの設定を確認してください。",
+        "OpenManually": "手動で開く"
     },
     "ScrewsTiltAdjust": {
         "Accept": "確認",

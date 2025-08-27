@@ -780,7 +780,19 @@
         "Machine": "Machine",
         "Printers": "Imprimantes",
         "Timelapse": "Timelapse",
-        "Webcam": "Caméra"
+        "Webcam": "Caméra",
+        "Spoolman": "Gestionnaire de bobines",
+        "APmode": "Mode AP"
+    },
+    "Spoolman": {
+        "Opening": "Ouverture du gestionnaire de bobines...",
+        "PopupBlocked": "Popup bloqué! Veuillez autoriser les pop-ups pour cette page.",
+        "OpenManually": "veuillez l'ouvrir manuellement."
+    },
+    "APmode": {
+        "Opening": "Ouverture du mode AP...",
+        "PopupBlocked": "Popup bloqué! Veuillez autoriser les pop-ups pour cette page.",
+        "OpenManually": "veuillez l'ouvrir manuellement."
     },
     "ScrewsTiltAdjust": {
         "Accept": "accepter",

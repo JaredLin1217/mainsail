@@ -864,7 +864,19 @@
         "Machine": "Maschine",
         "Printers": "Drucker",
         "Timelapse": "Zeitraffer",
-        "Webcam": "Webcam"
+        "Webcam": "Webcam",
+        "Spoolman": "Rollenverwaltung",
+        "APmode": "AP-Modus"
+    },
+    "Spoolman": {
+        "Opening": "Öffne Rollenverwaltung...",
+        "PopupBlocked": "Popup blockiert! Bitte erlaube Popups für diese Seite.",
+        "OpenManually": "Bitte öffne die Rollenverwaltung manuell in einem neuen Tab."
+    },
+    "APmode": {
+        "Opening": "Öffne AP-Modus...",
+        "PopupBlocked": "Popup blockiert! Bitte erlaube Popups für diese Seite.",
+        "OpenManually": "Bitte öffne den AP-Modus manuell in einem neuen Tab."
     },
     "ScrewsTiltAdjust": {
         "Accept": "akzeptieren",

@@ -865,7 +865,19 @@
         "Machine": "Gép",
         "Printers": "Nyomtatók",
         "Timelapse": "Idővonal",
-        "Webcam": "Webkamera"
+        "Webcam": "Webkamera",
+        "Spoolman": "Orsókezelő",
+        "APmode": "AP mód"
+    },
+    "Spoolman": {
+        "Opening": "Orsókezelő megnyitása...",
+        "PopupBlocked": "A felugró ablak le van tiltva. Kérjük, engedélyezd a felugró ablakokat az orsókezelő megnyitásához.",
+        "OpenManually": "Kattints ide az orsókezelő manuális megnyitásához."
+    },
+    "APmode": {
+        "Opening": "AP mód megnyitása...",
+        "PopupBlocked": "A felugró ablak le van tiltva. Kérjük, engedélyezd a felugró ablakokat az AP mód megnyitásához.",
+        "OpenManually": "Kattints ide az AP mód manuális megnyitásához."
     },
     "ScrewsTiltAdjust": {
         "Accept": "elfogad",
