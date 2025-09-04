@@ -125,11 +125,11 @@ const routes: AppRoute[] = [
   {
     name: 'machine',
     title: 'Machine',
-    path: '/config',
+    path: '/machine',
     icon: mdiWrench,
     component: Machine,
-    alwaysShow: true,
-    showInNavi: true,
+    alwaysShow: false,
+    showInNavi: false,
     position: 90,
   },
   {
