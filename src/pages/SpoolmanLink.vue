@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6">
+  <div class="p-6" v-if="showMessage">
     <p class="mb-2">{{ $t('Spoolman.Opening') }}</p>
     <p v-if="href">
       {{ $t('Spoolman.PopupBlocked') }}
@@ -17,6 +17,8 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class SpoolmanLink extends Vue {
   href: string = ''
   opened: boolean = false
+  showMessage: boolean = false
+  timer: number | null = null
 
   async mounted() {
     await this.openAndReturn()
@@ -28,14 +30,19 @@ export default class SpoolmanLink extends Vue {
 
     if (!this.opened && this.href) {
       this.opened = true
-      window.open(this.href, '_blank', 'noopener,noreferrer')
 
-      // 立即導回上一頁（或首頁）
-      this.$nextTick(() => {
-        if (window.history.length > 1) this.$router.back()
-        else this.$router.replace('/')
-      })
+      // 若 10 秒后仍在本页（代表跳转失败/被阻止），才显示提示内容
+      this.timer = window.setTimeout(() => {
+        this.showMessage = true
+      }, 10000)
+
+      // 在当前页面载入外部网址，并替换掉当前历史记录
+      window.location.replace(this.href)
     }
+  }
+
+  beforeDestroy() {
+    if (this.timer) clearTimeout(this.timer)
   }
 
   // ===== 取得 Spoolman URL（多層來源）=====
