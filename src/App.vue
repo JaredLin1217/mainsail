@@ -407,6 +407,22 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
   --app-height: 100%;
 }
 
+/* 仍允许滚动，但隐藏滚动条 */
+html, body {
+  overflow: auto;
+}
+
+/* Chrome / Edge / Chromium */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Firefox（可选，兼容用） */
+* { 
+  scrollbar-width: none;
+}
+
 #content {
   background-attachment: fixed;
   background-size: cover;
