@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6">
+  <div class="p-6" v-if="showMessage">
     <p class="mb-2">{{ $t('APmode.Opening') }}</p>
     <p v-if="href">
       {{ $t('APmode.PopupBlocked') }}
@@ -17,6 +17,8 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class ApmodeLink extends Vue {
   href: string = 'http://10.123.0.1:8181/'
   opened: boolean = false
+  showMessage: boolean = false
+  timer: number | null = null
 
   async mounted() {
     await this.openAndReturn()
@@ -25,13 +27,20 @@ export default class ApmodeLink extends Vue {
   async openAndReturn() {
     if (!this.opened && this.href) {
       this.opened = true
-      window.open(this.href, '_blank', 'noopener,noreferrer')
 
-      // 立即導回上一頁（或首頁）
-      this.$nextTick(() => {
-        if (window.history.length > 1) this.$router.back()
-        else this.$router.replace('/')
-      })
+      // 10 秒后还没离开本页 → 显示提示
+      this.timer = window.setTimeout(() => {
+        this.showMessage = true
+      }, 10000)
+
+      // 尝试直接跳转
+      window.location.replace(this.href)
+    }
+  }
+
+  beforeDestroy() {
+    if (this.timer) {
+      clearTimeout(this.timer)
     }
   }
 }
