@@ -9,6 +9,13 @@
                 </settings-row>
                 <v-divider class="my-2" />
                 <settings-row
+                    :title="$t('Settings.UiSettingsTab.ShowTopbarLogo')"
+                    :sub-title="$t('Settings.UiSettingsTab.ShowTopbarLogoDescription')"
+                    :dynamic-slot-width="true">
+                    <v-switch v-model="showTopbarLogo" hide-details class="mt-0" />
+                </settings-row>
+                <v-divider class="my-2" />
+                <settings-row
                     :title="$t('Settings.UiSettingsTab.BoolBigThumbnail')"
                     :sub-title="$t('Settings.UiSettingsTab.BoolBigThumbnailDescription')"
                     :dynamic-slot-width="true">
@@ -345,6 +352,14 @@ export default class SettingsUiSettingsTab extends Mixins(BaseMixin, ThemeMixin)
 
     set logoColor(newVal) {
         this.$store.dispatch('gui/saveSetting', { name: 'uiSettings.logo', value: newVal })
+    }
+
+    get showTopbarLogo() {
+        return this.$store.state.gui.uiSettings.showTopbarLogo ?? true
+    }
+
+    set showTopbarLogo(newVal) {
+        this.$store.dispatch('gui/saveSetting', { name: 'uiSettings.showTopbarLogo', value: newVal })
     }
 
     get defaultLogoColor() {

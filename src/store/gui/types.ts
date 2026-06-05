@@ -91,6 +91,7 @@ export interface GuiState {
         mode: 'light' | 'dark'
         theme: string
         logo: string
+        showTopbarLogo: boolean
         primary: string
         displayCancelPrint: boolean
         lockSlidersOnTouchDevices: boolean
