@@ -682,11 +682,15 @@
         "APmode": "APモード"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "開いています...",
         "PopupBlocked": "ポップアップがブロックされました。ブラウザの設定を確認してください。",
         "OpenManually": "手動で開く"
     },
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "開いています...",
         "PopupBlocked": "ポップアップがブロックされました。ブラウザの設定を確認してください。",
         "OpenManually": "手動で開く"

@@ -1,7 +1,7 @@
 <template>
-  <div class="p-6" v-if="showMessage">
-    <p class="mb-2">{{ $t('Spoolman.Opening') }}</p>
-    <p v-if="href">
+  <div v-if="showMessage" class="p-6">
+    <p class="mb-2">{{ $t(messageKey) }}</p>
+    <p v-if="showManualLink && href">
       {{ $t('Spoolman.PopupBlocked') }}
       <a :href="href" target="_blank" rel="noopener">
         {{ $t('Spoolman.OpenManually') }}
@@ -13,12 +13,23 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
+type SpoolmanLinkStatus = 'checking' | 'opening' | 'failed'
+
 @Component
 export default class SpoolmanLink extends Vue {
   href: string = ''
   opened: boolean = false
-  showMessage: boolean = false
+  showMessage: boolean = true
+  showManualLink: boolean = false
+  status: SpoolmanLinkStatus = 'checking'
   timer: number | null = null
+  connectionTimeout: number = 3000
+
+  get messageKey(): string {
+    if (this.status === 'failed') return 'Spoolman.ConnectionFailed'
+    if (this.status === 'opening') return 'Spoolman.Opening'
+    return 'Spoolman.Checking'
+  }
 
   async mounted() {
     await this.openAndReturn()
@@ -26,14 +37,26 @@ export default class SpoolmanLink extends Vue {
 
   // ===== 主流程 =====
   async openAndReturn() {
+    this.status = 'checking'
+    this.showMessage = true
+    this.showManualLink = false
     this.href = await this.resolveSpoolmanUrl()
+
+    const canConnect = await this.canReachSpoolman(this.href)
+    if (!canConnect) {
+      this.status = 'failed'
+      return
+    }
 
     if (!this.opened && this.href) {
       this.opened = true
+      this.status = 'opening'
+      this.showMessage = false
 
       // 若 10 秒后仍在本页（代表跳转失败/被阻止），才显示提示内容
       this.timer = window.setTimeout(() => {
         this.showMessage = true
+        this.showManualLink = true
       }, 10000)
 
       // 在当前页面载入外部网址，并替换掉当前历史记录
@@ -43,6 +66,27 @@ export default class SpoolmanLink extends Vue {
 
   beforeDestroy() {
     if (this.timer) clearTimeout(this.timer)
+  }
+
+  async canReachSpoolman(url: string): Promise<boolean> {
+    if (!url) return false
+
+    const controller = new AbortController()
+    const timer = window.setTimeout(() => controller.abort(), this.connectionTimeout)
+
+    try {
+      await fetch(url, {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-store',
+        signal: controller.signal,
+      })
+      return true
+    } catch {
+      return false
+    } finally {
+      clearTimeout(timer)
+    }
   }
 
   // ===== 取得 Spoolman URL（多層來源）=====

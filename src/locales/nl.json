@@ -736,11 +736,15 @@
         "APmode": "Access Point Modus"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "Bezig met openen...",
         "PopupBlocked": "Popup geblokkeerd!",
         "OpenManually": "Open Spoolman handmatig in een nieuw tabblad."
     },    
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "Bezig met openen...",
         "PopupBlocked": "Popup geblokkeerd!",
         "OpenManually": "Open de Access Point modus handmatig in een nieuw tabblad."

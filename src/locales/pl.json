@@ -752,11 +752,15 @@
         "APmode": "Tryb AP"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "Otwieranie menedżera szpul... Proszę czekać.",
         "PopupBlocked": "Wyskakujące okienko zostało zablokowane. Proszę zezwolić na wyskakujące okienka dla tej strony.",
         "OpenManually": "Proszę otworzyć menedżera szpul ręcznie z menu głównego."
     },    
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "Uruchamianie trybu AP... Proszę czekać.",
         "PopupBlocked": "Okno trybu AP zostało zablokowane. Proszę zezwolić na wyskakujące okienka dla tej strony.",
         "OpenManually": "Proszę otworzyć tryb AP ręcznie z menu głównego."

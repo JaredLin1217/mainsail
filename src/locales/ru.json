@@ -852,11 +852,15 @@
         "APmode": "Режим точки доступа"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "Открытие...",
         "PopupBlocked": "Всплывающее окно заблокировано",
         "OpenManually": "Пожалуйста, откройте его вручную"
     },    
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "Открытие...",
         "PopupBlocked": "Всплывающее окно заблокировано",
         "OpenManually": "Пожалуйста, откройте его вручную"
