@@ -1106,11 +1106,15 @@
         "APmode": "AP模式"
     },
     "Spoolman": {
+        "Checking": "正在检查料盘追踪后台连线...",
+        "ConnectionFailed": "无法连接料盘追踪后台。请确认 Spoolman 服务已启动且此设备可以访问。",
         "Opening": "正在打开料盘追踪后台...",
         "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开料盘追踪后台。",
         "OpenManually": "手动打开料盘追踪后台。"
     },
     "APmode": {
+        "Checking": "正在检查AP模式页面连线...",
+        "ConnectionFailed": "无法连接AP模式页面。请确认设备已进入AP模式且此设备可以访问。",
         "Opening": "正在打开AP模式页面...",
         "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开AP模式页面。",
         "OpenManually": "手动打开AP模式页面。"

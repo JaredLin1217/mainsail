@@ -683,11 +683,15 @@
         "APmode": "AP 모드"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "열기..",
         "PopupBlocked": "팝업 차단됨",
         "OpenManually": "수동으로 열기"
     },    
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "열기..",
         "PopupBlocked": "팝업 차단됨",
         "OpenManually": "수동으로 열기"

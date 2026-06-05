@@ -1107,11 +1107,15 @@
         "APmode": "AP-Modus"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "Öffne Rollenverwaltung...",
         "PopupBlocked": "Popup blockiert! Bitte erlaube Popups für diese Seite.",
         "OpenManually": "Bitte öffne die Rollenverwaltung manuell in einem neuen Tab."
     },
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "Öffne AP-Modus...",
         "PopupBlocked": "Popup blockiert! Bitte erlaube Popups für diese Seite.",
         "OpenManually": "Bitte öffne den AP-Modus manuell in einem neuen Tab."

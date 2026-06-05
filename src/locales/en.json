@@ -1118,11 +1118,15 @@
         "APmode": "AP Mode"
     },
     "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
         "Opening": "Reading Spoolman config and opening in a new tab…",
         "PopupBlocked": "If your browser blocked the popup,",
         "OpenManually": "click here to open Spoolman manually"
     },
     "APmode": {
+        "Checking": "Checking AP mode page connection...",
+        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
         "Opening": "Opening AP mode page...",
         "PopupBlocked": "Popup was blocked. Please allow popups or open the AP mode page manually.",
         "OpenManually": "Open AP mode page manually."

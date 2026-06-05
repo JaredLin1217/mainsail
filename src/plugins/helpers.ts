@@ -202,17 +202,12 @@ export const sortFiles = (items: FileStateFile[] | null, sortBy: string[], sortD
             const valueA = a[sortBySingle]
             const valueB = b[sortBySingle]
 
-<<<<<<< HEAD
             if (valueA === valueB) return 0
             if (valueA === null || valueA === undefined) return -1
             if (valueB === null || valueB === undefined) return 1
 
             if (typeof valueA === 'string' && typeof valueB === 'string') {
                 return valueA.localeCompare(valueB, undefined, { sensitivity: 'base' })
-=======
-            if (a[sortBySingle].constructor === String && b[sortBySingle].constructor === String) {
-                return a[sortBySingle].toString().localeCompare(b[sortBySingle].toString(), undefined, { sensitivity: 'base' })
->>>>>>> 04d6b1bd (init)
             }
 
             if (Array.isArray(valueA) && Array.isArray(valueB)) {
