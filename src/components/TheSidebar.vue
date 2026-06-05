@@ -30,13 +30,13 @@
                 <sidebar-item v-for="(category, index) in visibleNaviPoints" :key="index" :item="category" />
             </v-list>
         </overlay-scrollbars>
-        <template #append>
+        <!-- <template #append>
             <v-list-item class="small-list-item mb-2">
                 <v-list-item-icon class="menu-item-icon">
                     <about-dialog />
                 </v-list-item-icon>
             </v-list-item>
-        </template>
+        </template> -->
     </v-navigation-drawer>
 </template>
 
@@ -45,7 +45,7 @@ import Component from 'vue-class-component'
 import { Mixins } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
 import TheSelectPrinterDialog from '@/components/TheSelectPrinterDialog.vue'
-import AboutDialog from '@/components/dialogs/AboutDialog.vue'
+// import AboutDialog from '@/components/dialogs/AboutDialog.vue'
 import { navigationWidth, topbarHeight } from '@/store/variables'
 import InlongLogo from '@/components/ui/InlongLogo.vue'
 import SidebarItem from '@/components/ui/SidebarItem.vue'
@@ -56,7 +56,7 @@ import ThemeMixin from '@/components/mixins/theme'
     components: {
         SidebarItem,
         TheSelectPrinterDialog,
-        AboutDialog,
+        // AboutDialog,
         InlongLogo,
     },
 })

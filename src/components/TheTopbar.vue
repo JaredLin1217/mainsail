@@ -2,7 +2,7 @@
     <div>
         <v-app-bar app elevate-on-scroll :height="topbarHeight" class="topbar pa-0" clipped-left>
             <v-app-bar-nav-icon tile @click.stop="naviDrawer = !naviDrawer" />  
-            <router-link to="/" class="brand d-flex align-center mr-2">
+            <router-link v-if="showTopbarLogo" to="/" class="brand d-flex align-center mr-2">
                 <inline-svg v-if="sidebarLogo && isSvgLogo" :src="sidebarLogo" :class="logoClasses" />
                 <img v-else-if="sidebarLogo" :src="sidebarLogo" :class="logoClasses" alt="Logo" />
                 <inlong-logo v-else :color="logoColor" :class="logoClasses" router to="/" :ripple="false" />
@@ -185,6 +185,10 @@ export default class TheTopbar extends Mixins(BaseMixin, ThemeMixin) {
 
     get boolHideUploadAndPrintButton() {
         return this.$store.state.gui.uiSettings.boolHideUploadAndPrintButton ?? false
+    }
+
+    get showTopbarLogo() {
+        return this.$store.state.gui.uiSettings.showTopbarLogo ?? true
     }
 
     get isSvgLogo() {

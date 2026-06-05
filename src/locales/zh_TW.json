@@ -1369,6 +1369,8 @@
             "PrintstatusThumbnailZoom": "大縮圖縮放",
             "PrintstatusThumbnailZoomDescription": "這將停用狀態面板中縮圖的縮放效果。",
             "ScrewsTiltAdjustDialogDescription": "顯示 SCREWS_TILT_CALCULATE 的幫助程序對話框。",
+            "ShowTopbarLogo": "顯示頂部列Logo",
+            "ShowTopbarLogoDescription": "在頂部列顯示或隱藏Logo。",
             "TempchartHeightDescription": "修改儀表板上溫度圖表的高度。",
             "ThemeDescription": "自訂特定風格的介面外觀。",
             "UiSettings": "使用者介面設定"

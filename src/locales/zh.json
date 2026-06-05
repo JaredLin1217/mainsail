@@ -1539,6 +1539,8 @@
             "ProgressAsFaviconDescription": "将浏览器标签的Mainsail图标更改为进度圆圈。",
             "ScrewsTiltAdjustDialog": "螺丝倾斜调整对话框",
             "ScrewsTiltAdjustDialogDescription": "显示SCREWS_TILT_CALCULATE辅助对话框。",
+            "ShowTopbarLogo": "显示顶部栏Logo",
+            "ShowTopbarLogoDescription": "在顶部栏显示或隐藏Logo。",
             "TempchartHeight": "温度图表高度",
             "TempchartHeightDescription": "修改控制面板上温度图表的高度。",
             "Theme": "主题",

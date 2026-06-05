@@ -162,6 +162,7 @@ export const getDefaultState = (): GuiState => {
             mode: defaultMode,
             theme: defaultTheme,
             logo: defaultLogoColor,
+            showTopbarLogo: true,
             primary: defaultPrimaryColor,
             displayCancelPrint: false,
             lockSlidersOnTouchDevices: true,
