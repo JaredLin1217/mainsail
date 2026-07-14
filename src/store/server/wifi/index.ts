@@ -7,6 +7,7 @@ import { mutations } from './mutations'
 export const getDefaultState = (): ServerWifiState => ({
     status: null,
     networks: [],
+    revision: 0,
 })
 
 export const wifi: Module<ServerWifiState, RootState> = {

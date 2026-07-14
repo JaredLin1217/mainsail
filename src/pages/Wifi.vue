@@ -104,10 +104,10 @@
                             :key="`${network.ssid}-${network.security}`"
                             class="wifi-network-row px-4 px-sm-6"
                             :disabled="isBusy"
-                            :class="{ 'wifi-network-current': network.connected }"
+                            :class="{ 'wifi-network-current': isCurrentNetwork(network) }"
                             @click="selectNetwork(network)">
                             <v-list-item-icon class="my-auto mr-4">
-                                <v-icon size="30" :color="network.connected ? 'success' : undefined">
+                                <v-icon size="30" :color="isCurrentNetwork(network) ? 'primary' : undefined">
                                     {{ signalIcon(network.strength) }}
                                 </v-icon>
                             </v-list-item-icon>
@@ -124,7 +124,12 @@
                                     <v-chip v-if="network.saved" class="ml-2" x-small outlined>
                                         {{ $t('Wifi.Saved') }}
                                     </v-chip>
-                                    <v-chip v-if="network.connected" class="ml-2" color="success" x-small dark>
+                                    <v-chip
+                                        v-if="isCurrentNetwork(network)"
+                                        class="ml-2"
+                                        color="primary"
+                                        x-small
+                                        dark>
                                         {{ $t('Wifi.Connected') }}
                                     </v-chip>
                                 </v-list-item-subtitle>
@@ -183,7 +188,7 @@
                         class="touch-button"
                         color="primary"
                         large
-                        :disabled="!passwordIsValid"
+                        :disabled="!passwordIsValid || isBusy || selectedNetworkIsCurrent"
                         @click="submitPassword">
                         {{ $t('Wifi.Connect') }}
                     </v-btn>
@@ -204,7 +209,12 @@
                     <v-btn class="touch-button" text large @click="closeConnectConfirmDialog">
                         {{ $t('Wifi.Cancel') }}
                     </v-btn>
-                    <v-btn class="touch-button" color="primary" large @click="confirmConnection">
+                    <v-btn
+                        class="touch-button"
+                        color="primary"
+                        large
+                        :disabled="isBusy || selectedNetworkIsCurrent"
+                        @click="confirmConnection">
                         {{ $t('Wifi.Connect') }}
                     </v-btn>
                 </v-card-actions>
@@ -216,11 +226,11 @@
                 <v-card-title class="text-break">{{ $t('Wifi.ForgetTitle', { ssid: selectedSsid }) }}</v-card-title>
                 <v-card-text class="pt-4 text-body-1">
                     <p>{{ $t('Wifi.ForgetDescription') }}</p>
-                    <v-alert v-if="selectedNetwork && selectedNetwork.connected" type="warning" prominent>
+                    <v-alert v-if="selectedNetworkIsCurrent" type="warning" prominent>
                         {{ $t('Wifi.ForgetCurrentWarning') }}
                     </v-alert>
                     <v-alert
-                        v-if="printerIsPrinting && selectedNetwork && selectedNetwork.connected"
+                        v-if="printerIsPrinting && selectedNetworkIsCurrent"
                         class="mb-0"
                         type="warning"
                         prominent>
@@ -231,7 +241,7 @@
                     <v-btn class="touch-button" text large @click="closeForgetDialog">
                         {{ $t('Wifi.Cancel') }}
                     </v-btn>
-                    <v-btn class="touch-button" color="error" large @click="confirmForget">
+                    <v-btn class="touch-button" color="error" large :disabled="isBusy" @click="confirmForget">
                         {{ $t('Wifi.Forget') }}
                     </v-btn>
                 </v-card-actions>
@@ -243,7 +253,20 @@
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
-import { isValidWifiPassword } from '@/plugins/wifi'
+import {
+    canRunInitialWifiScan,
+    canRunWifiBackgroundScan,
+    getVisibleWifiError,
+    getWifiConnectionSignature,
+    isCurrentWifiNetwork,
+    isValidWifiPassword,
+    shouldDisplayWifiOperation,
+    shouldFinalizeWifiUserOperation,
+    sortWifiNetworks,
+    WifiPageLifecycle,
+    WifiScanScheduler,
+    WifiSingleFlight,
+} from '@/plugins/wifi'
 import type { WifiError, WifiErrorCode, WifiNetwork, WifiStatus } from '@/types/moonraker/MachineRPC'
 import {
     mdiAccessPointNetwork,
@@ -267,8 +290,9 @@ import {
 
 type LocalRequest = 'status' | 'scan' | 'connect' | 'forget' | null
 
-const POLL_INTERVAL_MS = 2000
+const POLL_INTERVAL_MS = 10000
 const SCAN_COOLDOWN_MS = 10000
+const AUTO_SCAN_INTERVAL_MS = 30000
 
 type DisplayWifiErrorCode = WifiErrorCode | 'backend_unavailable' | 'unknown'
 
@@ -318,9 +342,16 @@ export default class Wifi extends Mixins(BaseMixin) {
     requestError: DisplayWifiError | null = null
     handledOperationId: string | null = null
     scanAvailableAt = 0
-    scanAfterOperation = false
     clock = Date.now()
+    pageVisible = true
+    automaticRefreshEnabled = false
+    backgroundScanInFlight = false
+    pageLifecycle = new WifiPageLifecycle()
     pollTimer: number | null = null
+    autoScanTimer: number | null = null
+    cooldownTimer: number | null = null
+    scanScheduler = new WifiScanScheduler(() => this.runPendingScan())
+    statusRequest = new WifiSingleFlight<WifiStatus>()
 
     get isLocalKiosk(): boolean {
         const hostname = window.location.hostname.toLowerCase()
@@ -335,11 +366,24 @@ export default class Wifi extends Mixins(BaseMixin) {
         return this.$store.state.server.wifi?.networks ?? []
     }
 
+    get wifiRevision(): number {
+        return this.$store.state.server.wifi?.revision ?? 0
+    }
+
     get sortedNetworks(): WifiNetwork[] {
-        return [...this.networks].sort((a, b) => {
-            if (a.connected !== b.connected) return a.connected ? -1 : 1
-            return b.strength - a.strength
-        })
+        return sortWifiNetworks(this.wifiStatus, this.networks)
+    }
+
+    get connectionSignature(): string {
+        return getWifiConnectionSignature(this.wifiStatus)
+    }
+
+    get selectedNetworkIsCurrent(): boolean {
+        return Boolean(this.selectedNetwork && this.isCurrentNetwork(this.selectedNetwork))
+    }
+
+    get dialogIsOpen(): boolean {
+        return this.passwordDialog || this.connectConfirmDialog || this.forgetDialog
     }
 
     get isOperationRunning(): boolean {
@@ -347,7 +391,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     get isBusy(): boolean {
-        return this.localRequest !== null || this.isOperationRunning
+        return this.localRequest !== null || this.backgroundScanInFlight || this.isOperationRunning
     }
 
     get isConnecting(): boolean {
@@ -358,7 +402,12 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     get canScan(): boolean {
-        return Boolean(this.wifiStatus?.available) && !this.isBusy && this.clock >= this.scanAvailableAt
+        return (
+            this.socketIsConnected &&
+            Boolean(this.wifiStatus?.available) &&
+            !this.isBusy &&
+            this.clock >= this.scanAvailableAt
+        )
     }
 
     get statusText(): string {
@@ -368,7 +417,7 @@ export default class Wifi extends Mixins(BaseMixin) {
 
     get statusColor(): string {
         if (!this.wifiStatus?.available || this.wifiStatus?.state === 'error') return 'error'
-        if (this.wifiStatus?.state === 'connected') return 'success'
+        if (this.wifiStatus?.state === 'connected') return 'primary'
         if (this.wifiStatus?.state === 'connecting') return 'warning'
         return 'grey'
     }
@@ -407,6 +456,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     get operationText(): string {
         const operation = this.wifiStatus?.operation
         if (!operation || operation.state !== 'running') return ''
+        if (!shouldDisplayWifiOperation(operation, this.localRequest === 'scan')) return ''
 
         if (operation.type === 'connect')
             return this.$t('Wifi.OperationConnecting', { ssid: operation.ssid }).toString()
@@ -415,7 +465,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     get visibleError(): WifiError | DisplayWifiError | null {
-        return this.requestError ?? this.wifiStatus?.last_error ?? null
+        return getVisibleWifiError(this.requestError, this.wifiStatus)
     }
 
     get errorText(): string {
@@ -446,60 +496,107 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     @Watch('wifiStatus', { deep: true })
-    wifiStatusChanged(status: WifiStatus | null) {
+    wifiStatusChanged(status: WifiStatus | null, previousStatus: WifiStatus | null) {
+        const connectionChanged = getWifiConnectionSignature(status) !== getWifiConnectionSignature(previousStatus)
+        if (connectionChanged && this.automaticRefreshEnabled) this.scanScheduler.requestAfterSettle()
+
         const operation = status?.operation
-        if (!operation || operation.state === 'running' || operation.id === this.handledOperationId) return
+        if (operation && operation.state !== 'running' && operation.id !== this.handledOperationId) {
+            this.handledOperationId = operation.id
+            if (shouldFinalizeWifiUserOperation(operation)) {
+                this.requestError = null
+                this.selectedNetwork = null
 
-        this.handledOperationId = operation.id
-        if (operation.state === 'succeeded') {
-            this.requestError = null
-            this.selectedNetwork = null
-
-            if (operation.type === 'connect') this.$toast.success(this.$t('Wifi.ConnectSucceeded').toString())
-            if (operation.type === 'forget') this.$toast.success(this.$t('Wifi.ForgetSucceeded').toString())
-            if (operation.type !== 'scan') {
-                this.scanAfterOperation = true
-                this.runPendingScan()
+                if (operation.type === 'connect') this.$toast.success(this.$t('Wifi.ConnectSucceeded').toString())
+                if (operation.type === 'forget') this.$toast.success(this.$t('Wifi.ForgetSucceeded').toString())
+                this.scanScheduler.requestNow()
             }
+
+            if (operation.state === 'failed' && status?.last_error?.code === 'invalid_password' && operation.ssid) {
+                const failedNetwork = this.networks.find((network) => network.ssid === operation.ssid)
+                this.selectedNetwork = failedNetwork ?? null
+                if (failedNetwork) {
+                    this.clearPassword()
+                    this.passwordDialog = true
+                }
+            }
+        }
+
+        if (!connectionChanged) this.runPendingScan()
+    }
+
+    @Watch('socketIsConnected')
+    socketConnectionChanged(connected: boolean) {
+        if (
+            !this.pageLifecycle.active ||
+            !connected ||
+            !this.isLocalKiosk ||
+            !this.pageVisible ||
+            !this.automaticRefreshEnabled
+        )
             return
-        }
-
-        if (operation.state === 'failed' && status?.last_error?.code === 'invalid_password' && operation.ssid) {
-            this.selectedNetwork = this.networks.find((network) => network.ssid === operation.ssid) ?? {
-                ssid: operation.ssid,
-                security: 'wpa-psk',
-                strength: 0,
-                saved: true,
-                connected: false,
-                frequency: 0,
-            }
-            this.clearPassword()
-            this.passwordDialog = true
-        }
+        void this.resumeRefresh()
     }
 
     async mounted() {
         if (!this.isLocalKiosk) return
 
+        this.pageVisible = document.visibilityState !== 'hidden'
+        document.addEventListener('visibilitychange', this.documentVisibilityChanged)
+
         await this.refreshStatus(true)
+        if (!this.pageLifecycle.active) return
         if (
-            !this.isOperationRunning &&
-            this.wifiStatus?.available &&
-            !this.wifiStatus.last_error
+            canRunInitialWifiScan({
+                pageVisible: this.pageVisible,
+                operationRunning: this.isOperationRunning,
+                adapterAvailable: Boolean(this.wifiStatus?.available),
+                hasError: Boolean(this.wifiStatus?.last_error),
+            })
         ) {
             await this.scanNetworks()
         }
+        if (!this.pageLifecycle.active) return
+        this.automaticRefreshEnabled = true
 
         this.pollTimer = window.setInterval(() => {
             this.clock = Date.now()
-            void this.refreshStatus(false)
+            if (this.pageVisible) void this.refreshStatus(false)
             this.runPendingScan()
         }, POLL_INTERVAL_MS)
+
+        this.autoScanTimer = window.setInterval(() => {
+            this.clock = Date.now()
+            if (this.pageVisible) this.scanScheduler.requestNow()
+        }, AUTO_SCAN_INTERVAL_MS)
     }
 
     beforeDestroy() {
+        this.pageLifecycle.destroy()
+        this.automaticRefreshEnabled = false
         if (this.pollTimer !== null) window.clearInterval(this.pollTimer)
+        if (this.autoScanTimer !== null) window.clearInterval(this.autoScanTimer)
+        if (this.cooldownTimer !== null) window.clearTimeout(this.cooldownTimer)
+        this.pollTimer = null
+        this.autoScanTimer = null
+        this.cooldownTimer = null
+        document.removeEventListener('visibilitychange', this.documentVisibilityChanged)
+        this.scanScheduler.destroy()
         this.clearPassword()
+    }
+
+    documentVisibilityChanged() {
+        if (!this.pageLifecycle.active) return
+        this.pageVisible = document.visibilityState !== 'hidden'
+        if (this.pageVisible && this.automaticRefreshEnabled) void this.resumeRefresh()
+    }
+
+    async resumeRefresh() {
+        if (!this.pageLifecycle.active || !this.isLocalKiosk || !this.pageVisible || !this.socketIsConnected) return
+        const previousSignature = this.connectionSignature
+        await this.refreshStatus(false)
+        if (!this.pageLifecycle.active) return
+        if (previousSignature === this.connectionSignature) this.scanScheduler.requestNow()
     }
 
     signalIcon(strength: number | null): string {
@@ -514,19 +611,30 @@ export default class Wifi extends Mixins(BaseMixin) {
         return this.$t(network.security === 'open' ? 'Wifi.SecurityOpen' : 'Wifi.SecurityProtected').toString()
     }
 
+    isCurrentNetwork(network: WifiNetwork): boolean {
+        return isCurrentWifiNetwork(this.wifiStatus, network)
+    }
+
     async refreshStatus(initial: boolean) {
-        if (!this.isLocalKiosk || !this.$store.state.socket?.isConnected) {
+        if (!this.pageLifecycle.active || !this.isLocalKiosk || !this.socketIsConnected) {
             if (initial) this.initialLoading = false
             return
         }
 
-        if (initial) this.localRequest = 'status'
+        const joinedExistingRequest = this.statusRequest.running
+        const requestRevision = this.wifiRevision
+        if (initial && !joinedExistingRequest) this.localRequest = 'status'
         try {
-            const status = await this.$socket.emitAndWait('machine.wifi.status')
+            const status = await this.statusRequest.run(() => this.$socket.emitAndWait('machine.wifi.status'))
+            if (!this.pageLifecycle.active || joinedExistingRequest) return
+            const applied = await this.$store.dispatch('server/wifi/updateStatusIfRevision', {
+                status,
+                revision: requestRevision,
+            })
+            if (!applied || !this.pageLifecycle.active) return
             if (initial && status.operation?.state === 'succeeded') {
                 this.handledOperationId = status.operation.id
             }
-            await this.$store.dispatch('server/wifi/updateStatus', status)
             if (initial && status.operation?.state === 'failed') {
                 this.wifiStatusChanged(status)
             }
@@ -534,31 +642,62 @@ export default class Wifi extends Mixins(BaseMixin) {
         } catch (error: unknown) {
             if (initial) this.requestError = this.normalizeRpcError(error, 'backend_unavailable')
         } finally {
-            if (initial) this.localRequest = null
+            if (initial && !joinedExistingRequest) this.localRequest = null
             this.initialLoading = false
-        }
-    }
-
-    async scanNetworks() {
-        if (!this.isLocalKiosk || !this.wifiStatus?.available || this.isBusy || this.clock < this.scanAvailableAt)
-            return
-
-        this.localRequest = 'scan'
-        this.requestError = null
-        this.scanAvailableAt = Date.now() + SCAN_COOLDOWN_MS
-        try {
-            const result = await this.$socket.emitAndWait('machine.wifi.scan')
-            await this.$store.dispatch('server/wifi/updateScan', result)
-        } catch (error: unknown) {
-            this.requestError = this.normalizeRpcError(error)
-        } finally {
-            this.localRequest = null
             this.runPendingScan()
         }
     }
 
+    async scanNetworks() {
+        await this.performScan(false)
+    }
+
+    async performScan(background: boolean) {
+        this.clock = Date.now()
+        if (
+            !this.pageLifecycle.active ||
+            !this.isLocalKiosk ||
+            !this.socketIsConnected ||
+            !this.wifiStatus?.available ||
+            this.isBusy ||
+            this.clock < this.scanAvailableAt ||
+            (background && (!this.pageVisible || this.dialogIsOpen || Boolean(this.wifiStatus.last_error)))
+        )
+            return
+
+        if (background) this.backgroundScanInFlight = true
+        else {
+            this.scanScheduler.cancelPending()
+            this.localRequest = 'scan'
+            this.requestError = null
+        }
+        this.scanAvailableAt = this.clock + SCAN_COOLDOWN_MS
+        this.scheduleCooldownWake()
+        try {
+            const result = await this.$socket.emitAndWait('machine.wifi.scan')
+            if (this.pageLifecycle.active) await this.$store.dispatch('server/wifi/updateScan', result)
+        } catch (error: unknown) {
+            if (!background && this.pageLifecycle.active) this.requestError = this.normalizeRpcError(error)
+        } finally {
+            if (background) this.backgroundScanInFlight = false
+            else this.localRequest = null
+            this.runPendingScan()
+        }
+    }
+
+    scheduleCooldownWake() {
+        if (this.cooldownTimer !== null) window.clearTimeout(this.cooldownTimer)
+        const delay = Math.max(0, this.scanAvailableAt - Date.now())
+        this.cooldownTimer = window.setTimeout(() => {
+            this.cooldownTimer = null
+            if (!this.pageLifecycle.active) return
+            this.clock = Date.now()
+            this.runPendingScan()
+        }, delay)
+    }
+
     selectNetwork(network: WifiNetwork) {
-        if (this.isBusy || network.connected) return
+        if (this.isBusy || this.isCurrentNetwork(network)) return
         this.requestError = null
         this.selectedNetwork = network
 
@@ -578,7 +717,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     submitPassword() {
-        if (!this.passwordIsValid || !this.selectedNetwork) return
+        if (!this.passwordIsValid || !this.selectedNetwork || this.isBusy || this.selectedNetworkIsCurrent) return
         const password = this.password
         this.passwordDialog = false
         this.clearPassword()
@@ -586,13 +725,14 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     confirmConnection() {
+        if (!this.selectedNetwork || this.isBusy || this.selectedNetworkIsCurrent) return
         this.connectConfirmDialog = false
         void this.connectToSelectedNetwork()
     }
 
     async connectToSelectedNetwork(password?: string) {
         const network = this.selectedNetwork
-        if (!this.isLocalKiosk || !network || this.isBusy) return
+        if (!this.isLocalKiosk || !network || this.isBusy || this.isCurrentNetwork(network)) return
 
         this.localRequest = 'connect'
         this.requestError = null
@@ -622,8 +762,8 @@ export default class Wifi extends Mixins(BaseMixin) {
 
     async confirmForget() {
         const network = this.selectedNetwork
-        this.forgetDialog = false
         if (!this.isLocalKiosk || !network || this.isBusy) return
+        this.forgetDialog = false
 
         this.localRequest = 'forget'
         this.requestError = null
@@ -643,16 +783,19 @@ export default class Wifi extends Mixins(BaseMixin) {
         this.passwordDialog = false
         this.clearPassword()
         this.selectedNetwork = null
+        this.runPendingScan()
     }
 
     closeConnectConfirmDialog() {
         this.connectConfirmDialog = false
         this.selectedNetwork = null
+        this.runPendingScan()
     }
 
     closeForgetDialog() {
         this.forgetDialog = false
         this.selectedNetwork = null
+        this.runPendingScan()
     }
 
     clearPassword() {
@@ -661,10 +804,20 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     runPendingScan() {
-        if (!this.scanAfterOperation || this.isBusy || this.clock < this.scanAvailableAt) return
-
-        this.scanAfterOperation = false
-        void this.scanNetworks()
+        if (!this.pageLifecycle.active) return
+        this.clock = Date.now()
+        const canRun = canRunWifiBackgroundScan({
+            localKiosk: this.isLocalKiosk,
+            pageVisible: this.pageVisible,
+            socketConnected: this.socketIsConnected,
+            adapterAvailable: Boolean(this.wifiStatus?.available),
+            connectionStable: this.wifiStatus?.state !== 'connecting' && !this.scanScheduler.settling,
+            dialogOpen: this.dialogIsOpen,
+            busy: this.isBusy,
+            hasError: Boolean(this.wifiStatus?.last_error),
+            cooldownComplete: this.clock >= this.scanAvailableAt,
+        })
+        if (this.scanScheduler.consume(canRun)) void this.performScan(true)
     }
 
     normalizeRpcError(error: unknown, fallbackCode: DisplayWifiErrorCode = 'unknown'): DisplayWifiError {
@@ -722,7 +875,7 @@ export default class Wifi extends Mixins(BaseMixin) {
 }
 
 .wifi-network-current {
-    border-left: 4px solid var(--v-success-base);
+    border-left: 4px solid var(--v-primary-base, #d66c47);
 }
 
 .wifi-network-details {

@@ -1,7 +1,7 @@
 import type { ActionTree } from 'vuex'
 import type { RootState } from '@/store/types'
 import type { WifiStatus } from '@/types/moonraker/MachineRPC'
-import type { ServerWifiState, WifiScanPayload } from './types'
+import type { ServerWifiState, WifiScanPayload, WifiStatusRevisionPayload } from './types'
 
 export const actions: ActionTree<ServerWifiState, RootState> = {
     reset({ commit }) {
@@ -12,8 +12,18 @@ export const actions: ActionTree<ServerWifiState, RootState> = {
         commit('setStatus', payload)
     },
 
-    updateScan({ commit }, payload: WifiScanPayload) {
+    updateStatusIfRevision({ commit, state }, payload: WifiStatusRevisionPayload) {
+        if (state.revision !== payload.revision) return false
+
         commit('setStatus', payload.status)
-        commit('setNetworks', payload.networks)
+        return true
+    },
+
+    updateScan({ commit }, payload: WifiScanPayload) {
+        commit('setSnapshot', payload)
+    },
+
+    updateSnapshot({ commit }, payload: WifiScanPayload) {
+        commit('setSnapshot', payload)
     },
 }

@@ -195,15 +195,18 @@ export interface WifiStatus {
     last_error: WifiError | null
 }
 
+/** Atomic WiFi status and network-list snapshot reported by Moonraker. */
+export interface WifiNetworksSnapshot {
+    status: WifiStatus
+    networks: WifiNetwork[]
+}
+
 export interface MachineRPC {
     /** Returns the current WiFi adapter, connection, and operation state. */
     'machine.wifi.status': () => Promise<WifiStatus>
 
     /** Scans for supported visible 2.4 GHz networks. */
-    'machine.wifi.scan': () => Promise<{
-        status: WifiStatus
-        networks: WifiNetwork[]
-    }>
+    'machine.wifi.scan': () => Promise<WifiNetworksSnapshot>
 
     /** Starts an asynchronous WiFi connection operation. */
     'machine.wifi.connect': (params: { ssid: string; security: WifiSecurity; password?: string }) => Promise<{

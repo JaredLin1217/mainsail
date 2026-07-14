@@ -1,11 +1,14 @@
-import type { WifiNetwork, WifiStatus } from '@/types/moonraker/MachineRPC'
+import type { WifiNetwork, WifiNetworksSnapshot, WifiStatus } from '@/types/moonraker/MachineRPC'
 
 export interface ServerWifiState {
     status: WifiStatus | null
     networks: WifiNetwork[]
+    revision: number
 }
 
-export interface WifiScanPayload {
+export type WifiScanPayload = WifiNetworksSnapshot
+
+export interface WifiStatusRevisionPayload {
     status: WifiStatus
-    networks: WifiNetwork[]
+    revision: number
 }
