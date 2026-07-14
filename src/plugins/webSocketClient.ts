@@ -105,6 +105,7 @@ export class WebSocketClient {
         }
 
         this.instance.onclose = (e) => {
+            this.clearWaits(new Error('WebSocket connection closed'))
             if (e.wasClean || this.reconnects >= this.maxReconnects) {
                 this.store?.dispatch('socket/onClose', e)
                 return
@@ -149,10 +150,26 @@ export class WebSocketClient {
 
     removeWaitById(id: number | null): void {
         const index = this.waits.findIndex((wait: Wait) => wait.id === id)
-        if (index) {
+        if (index >= 0) {
             const wait = this.waits[index]
             if (wait.loading) this.store?.dispatch('socket/removeLoading', { name: wait.loading })
+            wait.params = {}
+            wait.actionPayload = {}
+            wait.resolve = undefined
+            wait.reject = undefined
             this.waits.splice(index, 1)
+        }
+    }
+
+    clearWaits(reason: Error): void {
+        const pending = this.waits.splice(0)
+        for (const wait of pending) {
+            if (wait.loading) this.store?.dispatch('socket/removeLoading', { name: wait.loading })
+            wait.params = {}
+            wait.actionPayload = {}
+            wait.reject?.(reason)
+            wait.resolve = undefined
+            wait.reject = undefined
         }
     }
 
@@ -186,7 +203,10 @@ export class WebSocketClient {
         options: emitOptions = {}
     ): Promise<RPCResult<M>> {
         return new Promise<RPCResult<M>>((resolve, reject) => {
-            if (this.instance?.readyState !== WebSocket.OPEN) reject()
+            if (this.instance?.readyState !== WebSocket.OPEN) {
+                reject(new Error('WebSocket is not connected'))
+                return
+            }
 
             const id = this.messageId++
             this.waits.push({

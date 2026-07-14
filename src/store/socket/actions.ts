@@ -107,6 +107,10 @@ export const actions: ActionTree<SocketState, RootState> = {
                 dispatch('server/serviceStateChanged', payload.params[0], { root: true })
                 break
 
+            case 'notify_wifi_state_changed':
+                dispatch('server/wifi/updateStatus', payload.params[0], { root: true })
+                break
+
             case 'notify_timelapse_event':
                 dispatch('server/timelapse/getEvent', payload.params[0], { root: true })
                 break

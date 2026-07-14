@@ -759,24 +759,9 @@
         "History": "Historik",
         "Machine": "Maskin",
         "Printers": "Skrivare",
-        "Timelapse": "Timelapse",
-        "Webcam": "Webbkamera",
         "Spoolman": "Spoolman",
-        "APmode": "AP-läge"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Öppnar...",
-        "PopupBlocked": "Popup blockerad",
-        "OpenManually": "Öppna manuellt"
-    },    
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Öppnar...",
-        "PopupBlocked": "Popup blockerad",
-        "OpenManually": "Öppna manuellt"
+        "Timelapse": "Timelapse",
+        "Webcam": "Webbkamera"
     },
     "ScrewsTiltAdjust": {
         "Accept": "godkänn",
@@ -1191,6 +1176,13 @@
             "WebrtcJanus": "WebRTC (janus-gateway)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Öppnar...",
+        "OpenManually": "Öppna manuellt",
+        "PopupBlocked": "Popup blockerad"
     },
     "Timelapse": {
         "AllFiles": "Alla",

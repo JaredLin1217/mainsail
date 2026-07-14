@@ -1112,24 +1112,10 @@
         "History": "History",
         "Machine": "Machine",
         "Printers": "Printers",
+        "Spoolman": "Spoolman",
         "Timelapse": "Timelapse",
         "Webcam": "Webcam",
-        "Spoolman": "Spoolman",
-        "APmode": "AP Mode"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Reading Spoolman config and opening in a new tab…",
-        "PopupBlocked": "If your browser blocked the popup,",
-        "OpenManually": "click here to open Spoolman manually"
-    },
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Opening AP mode page...",
-        "PopupBlocked": "Popup was blocked. Please allow popups or open the AP mode page manually.",
-        "OpenManually": "Open AP mode page manually."
+        "WiFi": "WiFi"
     },
     "ScrewsTiltAdjust": {
         "Accept": "accept",
@@ -1612,6 +1598,13 @@
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
     },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Reading Spoolman config and opening in a new tab…",
+        "OpenManually": "click here to open Spoolman manually",
+        "PopupBlocked": "If your browser blocked the popup,"
+    },
     "Timelapse": {
         "AllFiles": "All",
         "Autorender": "Auto-render",
@@ -1662,5 +1655,76 @@
         "Variable": "Variable",
         "Video": "Video"
     },
-    "title": "English"
+    "title": "English",
+    "Wifi": {
+        "AdapterUnavailable": "The WiFi adapter is not available. Check the adapter and NetworkManager.",
+        "AvailableNetworks": "Available networks",
+        "Cancel": "Cancel",
+        "ConfirmConnectTitle": "Connect to this network?",
+        "ConfirmSwitch": "Switch the device to {ssid}?",
+        "Connect": "Connect",
+        "Connected": "Connected",
+        "Connectivity": {
+            "full": "Online",
+            "limited": "Limited",
+            "none": "Offline",
+            "portal": "Sign-in required",
+            "unknown": "Unknown"
+        },
+        "ConnectSucceeded": "WiFi connected successfully.",
+        "CurrentNetwork": "Current network",
+        "Errors": {
+            "adapter_unavailable": "The WiFi adapter is unavailable.",
+            "backend_unavailable": "WiFi controls are unavailable. Check the Moonraker WiFi component.",
+            "busy": "Another WiFi operation is already in progress.",
+            "internal_error": "WiFi could not be changed because of an internal error.",
+            "invalid_password": "The password is incorrect. Enter the password again.",
+            "invalid_request": "The WiFi request is invalid.",
+            "network_not_found": "This network is no longer in range. Scan again and retry.",
+            "network_not_saved": "The saved network profile no longer exists.",
+            "permission_denied": "Moonraker does not have permission to change WiFi settings.",
+            "rollback_failed": "The connection failed and the previous network could not be restored.",
+            "timeout": "The connection timed out. Check the password and signal, then retry.",
+            "unknown": "The WiFi operation failed. Please try again.",
+            "unsupported_security": "This network security type is not supported."
+        },
+        "Forget": "Forget",
+        "ForgetCurrentWarning": "This is the current network. Forgetting it will disconnect WiFi and NetworkManager may connect to another saved network.",
+        "ForgetDescription": "All saved profiles for this network will be removed.",
+        "ForgetNetwork": "Forget this network",
+        "ForgetSucceeded": "Saved network removed.",
+        "ForgetTitle": "Forget {ssid}?",
+        "Internet": "Internet",
+        "IpAddress": "IP address",
+        "LocalOnlyDescription": "Open Mainsail at https://localhost/wifi on the device touchscreen.",
+        "LocalOnlyTitle": "WiFi can only be changed on the device",
+        "NoInternet": "WiFi is connected, but internet access is unavailable or limited. Local printing remains available.",
+        "NoNetworks": "No supported 2.4 GHz networks found. Move closer to the router and scan again.",
+        "NotConnected": "Not connected",
+        "OpenNetworkWarning": "{ssid} is an open network and does not use a password. Connect anyway?",
+        "OperationConnecting": "Connecting to {ssid}...",
+        "OperationForgetting": "Forgetting {ssid}...",
+        "OperationScanning": "Scanning for WiFi networks...",
+        "Password": "WiFi password",
+        "PasswordHint": "Use 8–63 bytes, or a 64-digit hexadecimal key.",
+        "PasswordTitle": "Enter the password for {ssid}",
+        "PrintingWarning": "A print is currently running. Printing will continue, but remote monitoring may disconnect while WiFi changes.",
+        "RecoveredNetwork": "The previous network, {ssid}, was restored.",
+        "RecoveryFailed": "No previous connection could be restored. Use this touchscreen to choose a network.",
+        "Rescan": "Scan again",
+        "Saved": "Saved",
+        "Scanning": "Scanning for WiFi networks...",
+        "SecurityOpen": "Open",
+        "SecurityProtected": "Password protected",
+        "Signal": "Signal",
+        "Status": {
+            "connected": "Connected",
+            "connecting": "Connecting",
+            "disconnected": "Disconnected",
+            "error": "Connection error",
+            "unavailable": "Unavailable"
+        },
+        "StatusUnavailable": "WiFi unavailable",
+        "Title": "WiFi"
+    }
 }

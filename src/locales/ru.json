@@ -1102,24 +1102,9 @@
         "History": "История",
         "Machine": "Система",
         "Printers": "Принтеры",
-        "Timelapse": "Таймлапсы",
-        "Webcam": "Видеокамеры",
         "Spoolman": "Управление прутками",
-        "APmode": "Режим точки доступа"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Открытие...",
-        "PopupBlocked": "Всплывающее окно заблокировано",
-        "OpenManually": "Пожалуйста, откройте его вручную"
-    },    
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Открытие...",
-        "PopupBlocked": "Всплывающее окно заблокировано",
-        "OpenManually": "Пожалуйста, откройте его вручную"
+        "Timelapse": "Таймлапсы",
+        "Webcam": "Видеокамеры"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Принять",
@@ -1597,6 +1582,13 @@
             "WebrtcJanus": "WebRTC (janus-gateway)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Открытие...",
+        "OpenManually": "Пожалуйста, откройте его вручную",
+        "PopupBlocked": "Всплывающее окно заблокировано"
     },
     "Timelapse": {
         "AllFiles": "Все",

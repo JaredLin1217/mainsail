@@ -769,24 +769,9 @@
         "History": "Historique",
         "Machine": "Machine",
         "Printers": "Imprimantes",
-        "Timelapse": "Timelapse",
-        "Webcam": "Caméra",
         "Spoolman": "Gestionnaire de bobines",
-        "APmode": "Mode AP"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Ouverture du gestionnaire de bobines...",
-        "PopupBlocked": "Popup bloqué! Veuillez autoriser les pop-ups pour cette page.",
-        "OpenManually": "veuillez l'ouvrir manuellement."
-    },
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Ouverture du mode AP...",
-        "PopupBlocked": "Popup bloqué! Veuillez autoriser les pop-ups pour cette page.",
-        "OpenManually": "veuillez l'ouvrir manuellement."
+        "Timelapse": "Timelapse",
+        "Webcam": "Caméra"
     },
     "ScrewsTiltAdjust": {
         "Accept": "accepter",
@@ -1206,6 +1191,13 @@
             "WebrtcJanus": "WebRTC (janus-gateway)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Ouverture du gestionnaire de bobines...",
+        "OpenManually": "veuillez l'ouvrir manuellement.",
+        "PopupBlocked": "Popup bloqué! Veuillez autoriser les pop-ups pour cette page."
     },
     "Timelapse": {
         "AllFiles": "Tous",

@@ -848,24 +848,9 @@
         "History": "Előzmények",
         "Machine": "Gép",
         "Printers": "Nyomtatók",
-        "Timelapse": "Idővonal",
-        "Webcam": "Webkamera",
         "Spoolman": "Orsókezelő",
-        "APmode": "AP mód"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Orsókezelő megnyitása...",
-        "PopupBlocked": "A felugró ablak le van tiltva. Kérjük, engedélyezd a felugró ablakokat az orsókezelő megnyitásához.",
-        "OpenManually": "Kattints ide az orsókezelő manuális megnyitásához."
-    },
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "AP mód megnyitása...",
-        "PopupBlocked": "A felugró ablak le van tiltva. Kérjük, engedélyezd a felugró ablakokat az AP mód megnyitásához.",
-        "OpenManually": "Kattints ide az AP mód manuális megnyitásához."
+        "Timelapse": "Idővonal",
+        "Webcam": "Webkamera"
     },
     "ScrewsTiltAdjust": {
         "Accept": "elfogad",
@@ -1332,6 +1317,13 @@
             "WebrtcJanus": "WebRTC (janus-átjáró)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Orsókezelő megnyitása...",
+        "OpenManually": "Kattints ide az orsókezelő manuális megnyitásához.",
+        "PopupBlocked": "A felugró ablak le van tiltva. Kérjük, engedélyezd a felugró ablakokat az orsókezelő megnyitásához."
     },
     "Timelapse": {
         "AllFiles": "Mind",

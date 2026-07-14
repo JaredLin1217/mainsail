@@ -1100,24 +1100,10 @@
         "History": "历史记录",
         "Machine": "机器",
         "Printers": "打印机",
+        "Spoolman": "料盘追踪",
         "Timelapse": "延时摄影",
         "Webcam": "摄像头",
-        "Spoolman": "料盘追踪",
-        "APmode": "AP模式"
-    },
-    "Spoolman": {
-        "Checking": "正在检查料盘追踪后台连线...",
-        "ConnectionFailed": "无法连接料盘追踪后台。请确认 Spoolman 服务已启动且此设备可以访问。",
-        "Opening": "正在打开料盘追踪后台...",
-        "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开料盘追踪后台。",
-        "OpenManually": "手动打开料盘追踪后台。"
-    },
-    "APmode": {
-        "Checking": "正在检查AP模式页面连线...",
-        "ConnectionFailed": "无法连接AP模式页面。请确认设备已进入AP模式且此设备可以访问。",
-        "Opening": "正在打开AP模式页面...",
-        "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开AP模式页面。",
-        "OpenManually": "手动打开AP模式页面。"
+        "WiFi": "无线网络"
     },
     "ScrewsTiltAdjust": {
         "Accept": "接受",
@@ -1598,6 +1584,13 @@
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
     },
+    "Spoolman": {
+        "Checking": "正在检查料盘追踪后台连线...",
+        "ConnectionFailed": "无法连接料盘追踪后台。请确认 Spoolman 服务已启动且此设备可以访问。",
+        "Opening": "正在打开料盘追踪后台...",
+        "OpenManually": "手动打开料盘追踪后台。",
+        "PopupBlocked": "弹出窗口被阻止。请允许弹出窗口以手动打开料盘追踪后台。"
+    },
     "Timelapse": {
         "AllFiles": "全部文件",
         "Autorender": "自动渲染",
@@ -1648,5 +1641,76 @@
         "Variable": "变量",
         "Video": "视频"
     },
-    "title": "简体中文"
+    "title": "简体中文",
+    "Wifi": {
+        "AdapterUnavailable": "无线网卡不可用，请检查网卡与 NetworkManager。",
+        "AvailableNetworks": "可用网络",
+        "Cancel": "取消",
+        "ConfirmConnectTitle": "连接此网络？",
+        "ConfirmSwitch": "要将设备切换到 {ssid} 吗？",
+        "Connect": "连接",
+        "Connected": "已连接",
+        "Connectivity": {
+            "full": "可访问互联网",
+            "limited": "连接受限",
+            "none": "无法访问互联网",
+            "portal": "需要登录",
+            "unknown": "未知"
+        },
+        "ConnectSucceeded": "无线网络连接成功。",
+        "CurrentNetwork": "当前网络",
+        "Errors": {
+            "adapter_unavailable": "无线网卡目前不可用。",
+            "backend_unavailable": "无线网络控制功能不可用，请检查 Moonraker WiFi 组件。",
+            "busy": "另一项无线网络操作正在进行中。",
+            "internal_error": "发生内部错误，无法更改无线网络。",
+            "invalid_password": "密码错误，请重新输入。",
+            "invalid_request": "无线网络请求无效。",
+            "network_not_found": "此网络已不在范围内，请重新扫描后再试。",
+            "network_not_saved": "保存的网络配置已不存在。",
+            "permission_denied": "Moonraker 没有更改无线网络的权限。",
+            "rollback_failed": "连接失败，且无法恢复原来的网络。",
+            "timeout": "连接超时，请检查密码和信号后重试。",
+            "unknown": "无线网络操作失败，请重试。",
+            "unsupported_security": "不支持此网络的安全类型。"
+        },
+        "Forget": "忘记",
+        "ForgetCurrentWarning": "这是当前网络。忘记后会断开无线网络，NetworkManager 可能会连接其他已保存网络。",
+        "ForgetDescription": "此网络的所有已保存配置都会被删除。",
+        "ForgetNetwork": "忘记此网络",
+        "ForgetSucceeded": "已删除保存的网络。",
+        "ForgetTitle": "忘记 {ssid}？",
+        "Internet": "互联网",
+        "IpAddress": "IP 地址",
+        "LocalOnlyDescription": "请在设备触控屏打开 https://localhost/wifi。",
+        "LocalOnlyTitle": "只能在设备上更改无线网络",
+        "NoInternet": "无线网络已连接，但无法访问互联网或连接受限。本机打印仍可正常使用。",
+        "NoNetworks": "未找到支持的 2.4 GHz 网络。请靠近路由器后重新扫描。",
+        "NotConnected": "未连接",
+        "OpenNetworkWarning": "{ssid} 是不需要密码的开放网络，仍要连接吗？",
+        "OperationConnecting": "正在连接 {ssid}...",
+        "OperationForgetting": "正在忘记 {ssid}...",
+        "OperationScanning": "正在扫描无线网络...",
+        "Password": "无线网络密码",
+        "PasswordHint": "请输入 8–63 字节密码，或 64 位十六进制密钥。",
+        "PasswordTitle": "输入 {ssid} 的密码",
+        "PrintingWarning": "当前正在打印。打印会继续，但切换无线网络时远程监控可能暂时断开。",
+        "RecoveredNetwork": "已恢复原来的网络 {ssid}。",
+        "RecoveryFailed": "无法恢复原来的连接，请使用此触控屏选择网络。",
+        "Rescan": "重新扫描",
+        "Saved": "已保存",
+        "Scanning": "正在扫描无线网络...",
+        "SecurityOpen": "开放网络",
+        "SecurityProtected": "密码保护",
+        "Signal": "信号",
+        "Status": {
+            "connected": "已连接",
+            "connecting": "正在连接",
+            "disconnected": "未连接",
+            "error": "连接错误",
+            "unavailable": "不可用"
+        },
+        "StatusUnavailable": "无线网络不可用",
+        "Title": "无线网络"
+    }
 }

@@ -876,24 +876,9 @@
         "History": "Historie",
         "Machine": "Tiskárna",
         "Printers": "Tiskárny",
-        "Timelapse": "Time-lapse",
-        "Webcam": "Webkamera",
         "Spoolman": "Spoolman",
-        "APmode": "AP režim"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Otevírám...",
-        "PopupBlocked": "Vyskakovací okno bylo zablokováno. Prosím povolte vyskakovací okna pro tuto stránku.",
-        "OpenManually": "Otevřít ručně"
-    },
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Otevírám...",
-        "PopupBlocked": "Vyskakovací okno bylo zablokováno. Prosím povolte vyskakovací okna pro tuto stránku.",
-        "OpenManually": "Otevřít ručně"
+        "Timelapse": "Time-lapse",
+        "Webcam": "Webkamera"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Přijmout",
@@ -1367,6 +1352,13 @@
             "WebrtcJanus": "WebRTC (janus-gateway)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Otevírám...",
+        "OpenManually": "Otevřít ručně",
+        "PopupBlocked": "Vyskakovací okno bylo zablokováno. Prosím povolte vyskakovací okna pro tuto stránku."
     },
     "Timelapse": {
         "AllFiles": "Všechny",

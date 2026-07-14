@@ -132,7 +132,89 @@ export interface CanDevice {
     application: string
 }
 
+export type WifiSecurity = 'open' | 'wpa-psk'
+
+export type WifiConnectionState = 'unavailable' | 'disconnected' | 'connecting' | 'connected' | 'error'
+
+export type WifiConnectivity = 'unknown' | 'none' | 'portal' | 'limited' | 'full'
+
+export type WifiOperationType = 'scan' | 'connect' | 'forget'
+
+export type WifiOperationState = 'running' | 'succeeded' | 'failed'
+
+export type WifiErrorCode =
+    | 'adapter_unavailable'
+    | 'busy'
+    | 'internal_error'
+    | 'invalid_password'
+    | 'invalid_request'
+    | 'network_not_found'
+    | 'network_not_saved'
+    | 'permission_denied'
+    | 'rollback_failed'
+    | 'timeout'
+    | 'unsupported_security'
+
+/** A visible, supported 2.4 GHz network reported by NetworkManager. */
+export interface WifiNetwork {
+    ssid: string
+    security: WifiSecurity
+    strength: number
+    saved: boolean
+    connected: boolean
+    frequency: number
+}
+
+/** The most recent WiFi operation exposed by Moonraker. */
+export interface WifiOperation {
+    id: string
+    type: WifiOperationType
+    ssid: string | null
+    state: WifiOperationState
+    started_at: number
+}
+
+/** A stable, user-actionable WiFi error. */
+export interface WifiError {
+    code: WifiErrorCode
+    message: string
+    recovered_ssid: string | null
+}
+
+/** Current state of the local kiosk WiFi adapter. */
+export interface WifiStatus {
+    interface: string
+    available: boolean
+    state: WifiConnectionState
+    connected: boolean
+    ssid: string | null
+    strength: number | null
+    ip_address: string | null
+    connectivity: WifiConnectivity
+    operation: WifiOperation | null
+    last_error: WifiError | null
+}
+
 export interface MachineRPC {
+    /** Returns the current WiFi adapter, connection, and operation state. */
+    'machine.wifi.status': () => Promise<WifiStatus>
+
+    /** Scans for supported visible 2.4 GHz networks. */
+    'machine.wifi.scan': () => Promise<{
+        status: WifiStatus
+        networks: WifiNetwork[]
+    }>
+
+    /** Starts an asynchronous WiFi connection operation. */
+    'machine.wifi.connect': (params: { ssid: string; security: WifiSecurity; password?: string }) => Promise<{
+        operation_id: string
+    }>
+
+    /** Forgets every saved NetworkManager profile for an SSID. */
+    'machine.wifi.forget': (params: { ssid: string }) => Promise<{
+        operation_id: string
+    }>
+
     /**
      * Returns a list of all USB devices currently detected on the system.
      */

@@ -1001,24 +1001,10 @@
         "History": "歷史紀錄",
         "Machine": "機器設備",
         "Printers": "列印機",
+        "Spoolman": "料盤管理",
         "Timelapse": "縮時攝影",
         "Webcam": "網絡攝影機",
-        "Spoolman": "料盤管理",
-        "APmode": "AP模式"
-    },
-    "Spoolman": {
-        "Checking": "正在檢查料盤管理連線...",
-        "ConnectionFailed": "無法連接料盤管理。請確認 Spoolman 服務已啟動且此裝置可以存取。",
-        "Opening": "正在打開料盤管理...",
-        "PopupBlocked": "彈出窗口被阻止。請允許彈出窗口以使用料盤管理。",
-        "OpenManually": "請手動打開料盤管理。"
-    },    
-    "APmode": {
-        "Checking": "正在檢查AP模式頁面連線...",
-        "ConnectionFailed": "無法連接AP模式頁面。請確認設備已進入AP模式且此裝置可以存取。",
-        "Opening": "正在打開AP模式頁面...",
-        "PopupBlocked": "彈出窗口被阻止。請允許彈出窗口以使用AP模式。",
-        "OpenManually": "請手動打開AP模式頁面。"
+        "WiFi": "無線網路"
     },
     "ScrewsTiltAdjust": {
         "Accept": "接受",
@@ -1408,6 +1394,13 @@
             "Webcams": "攝影機"
         }
     },
+    "Spoolman": {
+        "Checking": "正在檢查料盤管理連線...",
+        "ConnectionFailed": "無法連接料盤管理。請確認 Spoolman 服務已啟動且此裝置可以存取。",
+        "Opening": "正在打開料盤管理...",
+        "OpenManually": "請手動打開料盤管理。",
+        "PopupBlocked": "彈出窗口被阻止。請允許彈出窗口以使用料盤管理。"
+    },
     "Timelapse": {
         "AllFiles": "所有",
         "Autorender": "自動渲染",
@@ -1457,5 +1450,76 @@
         "Variable": "變數",
         "Video": "影片"
     },
-    "title": "繁體中文"
+    "title": "繁體中文",
+    "Wifi": {
+        "AdapterUnavailable": "無線網卡無法使用，請檢查網卡與 NetworkManager。",
+        "AvailableNetworks": "可用網路",
+        "Cancel": "取消",
+        "ConfirmConnectTitle": "連線至此網路？",
+        "ConfirmSwitch": "要將設備切換至 {ssid} 嗎？",
+        "Connect": "連線",
+        "Connected": "已連線",
+        "Connectivity": {
+            "full": "可連上網際網路",
+            "limited": "連線受限",
+            "none": "無法連上網際網路",
+            "portal": "需要登入",
+            "unknown": "未知"
+        },
+        "ConnectSucceeded": "無線網路連線成功。",
+        "CurrentNetwork": "目前網路",
+        "Errors": {
+            "adapter_unavailable": "無線網卡目前無法使用。",
+            "backend_unavailable": "無線網路控制功能無法使用，請檢查 Moonraker WiFi 元件。",
+            "busy": "另一項無線網路操作正在進行中。",
+            "internal_error": "發生內部錯誤，無法變更無線網路。",
+            "invalid_password": "密碼錯誤，請重新輸入。",
+            "invalid_request": "無線網路請求無效。",
+            "network_not_found": "此網路已不在範圍內，請重新掃描後再試。",
+            "network_not_saved": "已儲存的網路設定已不存在。",
+            "permission_denied": "Moonraker 沒有變更無線網路的權限。",
+            "rollback_failed": "連線失敗，且無法恢復原來的網路。",
+            "timeout": "連線逾時，請檢查密碼與訊號後重試。",
+            "unknown": "無線網路操作失敗，請重試。",
+            "unsupported_security": "不支援此網路的安全類型。"
+        },
+        "Forget": "忘記",
+        "ForgetCurrentWarning": "這是目前網路。忘記後會中斷無線網路，NetworkManager 可能會連線至其他已儲存網路。",
+        "ForgetDescription": "此網路的所有已儲存設定都會被刪除。",
+        "ForgetNetwork": "忘記此網路",
+        "ForgetSucceeded": "已刪除儲存的網路。",
+        "ForgetTitle": "忘記 {ssid}？",
+        "Internet": "網際網路",
+        "IpAddress": "IP 位址",
+        "LocalOnlyDescription": "請在設備觸控螢幕開啟 https://localhost/wifi。",
+        "LocalOnlyTitle": "只能在設備上變更無線網路",
+        "NoInternet": "無線網路已連線，但無法連上網際網路或連線受限。本機列印仍可正常使用。",
+        "NoNetworks": "找不到支援的 2.4 GHz 網路。請靠近路由器後重新掃描。",
+        "NotConnected": "未連線",
+        "OpenNetworkWarning": "{ssid} 是不需要密碼的開放網路，仍要連線嗎？",
+        "OperationConnecting": "正在連線至 {ssid}...",
+        "OperationForgetting": "正在忘記 {ssid}...",
+        "OperationScanning": "正在掃描無線網路...",
+        "Password": "無線網路密碼",
+        "PasswordHint": "請輸入 8–63 位元組密碼，或 64 位十六進位金鑰。",
+        "PasswordTitle": "輸入 {ssid} 的密碼",
+        "PrintingWarning": "目前正在列印。列印會繼續，但切換無線網路時遠端監控可能暫時中斷。",
+        "RecoveredNetwork": "已恢復原來的網路 {ssid}。",
+        "RecoveryFailed": "無法恢復原來的連線，請使用此觸控螢幕選擇網路。",
+        "Rescan": "重新掃描",
+        "Saved": "已儲存",
+        "Scanning": "正在掃描無線網路...",
+        "SecurityOpen": "開放網路",
+        "SecurityProtected": "密碼保護",
+        "Signal": "訊號",
+        "Status": {
+            "connected": "已連線",
+            "connecting": "正在連線",
+            "disconnected": "未連線",
+            "error": "連線錯誤",
+            "unavailable": "無法使用"
+        },
+        "StatusUnavailable": "無線網路無法使用",
+        "Title": "無線網路"
+    }
 }

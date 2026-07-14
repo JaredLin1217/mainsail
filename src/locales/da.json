@@ -823,24 +823,9 @@
         "History": "Historik",
         "Machine": "Printer",
         "Printers": "Printere",
-        "Timelapse": "Timelapse",
-        "Webcam": "Webcam",
         "Spoolman": "SpoolMan",
-        "APmode": "AP-tilstand"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Åbner... Hvis popup-blokkeren er aktiveret, skal du muligvis åbne SpoolMan manuelt {openManually}",
-        "PopupBlocked": "Popup blokeret! Åbn SpoolMan manuelt {openManually}",
-        "OpenManually": "her"
-    },
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Åbner... Hvis popup-blokkeren er aktiveret, skal du muligvis åbne AP-tilstand manuelt {openManually}",
-        "PopupBlocked": "Popup blokeret! Åbn AP-tilstand manuelt {openManually}",
-        "OpenManually": "her"
+        "Timelapse": "Timelapse",
+        "Webcam": "Webcam"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Acceptér",
@@ -1277,6 +1262,13 @@
             "WebrtcJanus": "WebRTC (janus-gateway)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Åbner... Hvis popup-blokkeren er aktiveret, skal du muligvis åbne SpoolMan manuelt {openManually}",
+        "OpenManually": "her",
+        "PopupBlocked": "Popup blokeret! Åbn SpoolMan manuelt {openManually}"
     },
     "Timelapse": {
         "AllFiles": "Alle",

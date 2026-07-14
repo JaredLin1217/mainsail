@@ -677,24 +677,9 @@
         "History": "작업 내역",
         "Machine": "프린터 설정",
         "Printers": "원격 프린터",
-        "Timelapse": "타임랩스",
-        "Webcam": "웹캠",
         "Spoolman": "스풀맨",
-        "APmode": "AP 모드"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "열기..",
-        "PopupBlocked": "팝업 차단됨",
-        "OpenManually": "수동으로 열기"
-    },    
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "열기..",
-        "PopupBlocked": "팝업 차단됨",
-        "OpenManually": "수동으로 열기"
+        "Timelapse": "타임랩스",
+        "Webcam": "웹캠"
     },
     "ScrewsTiltAdjust": {
         "Accept": "확인",
@@ -1058,6 +1043,13 @@
             "Webcams": "웹캠",
             "WebrtcCameraStreamer": "WebRTC (camera-streamer)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "열기..",
+        "OpenManually": "수동으로 열기",
+        "PopupBlocked": "팝업 차단됨"
     },
     "Timelapse": {
         "AllFiles": "전체",

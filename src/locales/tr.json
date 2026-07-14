@@ -1101,24 +1101,9 @@
         "History": "Geçmiş",
         "Machine": "Makine",
         "Printers": "Yazıcılar",
-        "Timelapse": "Hızlandırılmış Çekim",
-        "Webcam": "Web Kamerası",
         "Spoolman": "Spoolman",
-        "APmode": "AP Modu"
-    },
-    "Spoolman": {
-        "Checking": "Checking Spoolman connection...",
-        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
-        "Opening": "Açılıyor...",
-        "PopupBlocked": "Popup engellendi! Lütfen tarayıcı ayarlarınızı kontrol edin.",
-        "OpenManually": "Manuel olarak aç"
-    },    
-    "APmode": {
-        "Checking": "Checking AP mode page connection...",
-        "ConnectionFailed": "Unable to connect to the AP mode page. Please check that the device is in AP mode and reachable.",
-        "Opening": "Opening...",
-        "PopupBlocked": "Popup blocked! Please check your browser settings.",
-        "OpenManually": ""
+        "Timelapse": "Hızlandırılmış Çekim",
+        "Webcam": "Web Kamerası"
     },
     "ScrewsTiltAdjust": {
         "Accept": "Kabul Et",
@@ -1596,6 +1581,13 @@
             "WebrtcJanus": "WebRTC (janus-gateway)",
             "WebrtcMediaMTX": "WebRTC (MediaMTX)"
         }
+    },
+    "Spoolman": {
+        "Checking": "Checking Spoolman connection...",
+        "ConnectionFailed": "Unable to connect to Spoolman. Please check that Spoolman is running and reachable.",
+        "Opening": "Açılıyor...",
+        "OpenManually": "Manuel olarak aç",
+        "PopupBlocked": "Popup engellendi! Lütfen tarayıcı ayarlarınızı kontrol edin."
     },
     "Timelapse": {
         "AllFiles": "Tümü",
