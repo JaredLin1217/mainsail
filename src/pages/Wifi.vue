@@ -1,6 +1,6 @@
 <template>
     <v-container class="wifi-page py-6" fluid>
-        <v-alert v-if="!isLocalKiosk" class="mx-auto" max-width="840" type="info" prominent>
+        <v-alert v-if="!isLocalKiosk" class="mx-auto" max-width="840" type="error" prominent>
             <div class="text-h6 mb-2">{{ $t('Wifi.LocalOnlyTitle') }}</div>
             <div>{{ $t('Wifi.LocalOnlyDescription') }}</div>
         </v-alert>
