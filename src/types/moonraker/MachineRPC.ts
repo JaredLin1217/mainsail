@@ -185,6 +185,8 @@ export interface WifiError {
 export interface WifiStatus {
     interface: string
     available: boolean
+    enabled: boolean
+    hardware_enabled: boolean
     state: WifiConnectionState
     connected: boolean
     ssid: string | null
@@ -217,6 +219,9 @@ export interface MachineRPC {
     'machine.wifi.forget': (params: { ssid: string }) => Promise<{
         operation_id: string
     }>
+
+    /** Enables or disables the local WiFi radio. */
+    'machine.wifi.set_enabled': (params: { enabled: boolean }) => Promise<WifiNetworksSnapshot>
 
     /**
      * Returns a list of all USB devices currently detected on the system.

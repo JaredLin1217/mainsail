@@ -1673,6 +1673,11 @@
         },
         "ConnectSucceeded": "WiFi connected successfully.",
         "CurrentNetwork": "Current network",
+        "Disable": "Turn off",
+        "DisableDescription": "Turning off WiFi will disconnect this device from {ssid}. Saved networks will be kept.",
+        "DisableSucceeded": "WiFi turned off.",
+        "DisableTitle": "Turn off WiFi?",
+        "EnableSucceeded": "WiFi turned on.",
         "Errors": {
             "adapter_unavailable": "The WiFi adapter is unavailable.",
             "backend_unavailable": "WiFi controls are unavailable. Check the Moonraker WiFi component.",
@@ -1709,6 +1714,8 @@
         "PasswordHint": "Use 8–63 bytes, or a 64-digit hexadecimal key.",
         "PasswordTitle": "Enter the password for {ssid}",
         "PrintingWarning": "A print is currently running. Printing will continue, but remote monitoring may disconnect while WiFi changes.",
+        "Radio": "WiFi",
+        "RadioDisabledDescription": "WiFi is turned off. Use the switch above to turn it on.",
         "RecoveredNetwork": "The previous network, {ssid}, was restored.",
         "RecoveryFailed": "No previous connection could be restored. Use this touchscreen to choose a network.",
         "Rescan": "Scan again",
@@ -1724,6 +1731,7 @@
             "error": "Connection error",
             "unavailable": "Unavailable"
         },
+        "StatusDisabled": "WiFi off",
         "StatusUnavailable": "WiFi unavailable",
         "Title": "WiFi"
     }

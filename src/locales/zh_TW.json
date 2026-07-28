@@ -1468,6 +1468,11 @@
         },
         "ConnectSucceeded": "無線網路連線成功。",
         "CurrentNetwork": "目前網路",
+        "Disable": "關閉",
+        "DisableDescription": "關閉無線網路會中斷設備與 {ssid} 的連線，已儲存的網路設定會保留。",
+        "DisableSucceeded": "無線網路已關閉。",
+        "DisableTitle": "關閉無線網路？",
+        "EnableSucceeded": "無線網路已開啟。",
         "Errors": {
             "adapter_unavailable": "無線網卡目前無法使用。",
             "backend_unavailable": "無線網路控制功能無法使用，請檢查 Moonraker WiFi 元件。",
@@ -1504,6 +1509,8 @@
         "PasswordHint": "請輸入 8–63 位元組密碼，或 64 位十六進位金鑰。",
         "PasswordTitle": "輸入 {ssid} 的密碼",
         "PrintingWarning": "目前正在列印。列印會繼續，但切換無線網路時遠端監控可能暫時中斷。",
+        "Radio": "無線網路",
+        "RadioDisabledDescription": "無線網路已關閉，請使用上方開關重新開啟。",
         "RecoveredNetwork": "已恢復原來的網路 {ssid}。",
         "RecoveryFailed": "無法恢復原來的連線，請使用此觸控螢幕選擇網路。",
         "Rescan": "重新掃描",
@@ -1519,6 +1526,7 @@
             "error": "連線錯誤",
             "unavailable": "無法使用"
         },
+        "StatusDisabled": "無線網路已關閉",
         "StatusUnavailable": "無線網路無法使用",
         "Title": "無線網路"
     }

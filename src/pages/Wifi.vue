@@ -11,16 +11,29 @@
                     <v-icon class="mr-3" color="primary" size="32">{{ mdiWifi }}</v-icon>
                     <span>{{ $t('Wifi.Title') }}</span>
                     <v-spacer />
-                    <v-btn
-                        class="touch-button"
-                        color="primary"
-                        large
-                        :disabled="!canScan"
-                        :loading="localRequest === 'scan'"
-                        @click="scanNetworks">
-                        <v-icon left>{{ mdiRefresh }}</v-icon>
-                        {{ $t('Wifi.Rescan') }}
-                    </v-btn>
+                    <div class="wifi-card-actions d-flex align-center">
+                        <v-switch
+                            v-if="wifiToggleSupported"
+                            class="wifi-radio-switch mr-4"
+                            color="primary"
+                            hide-details
+                            inset
+                            :disabled="!canToggleWifi"
+                            :input-value="wifiEnabled"
+                            :label="$t('Wifi.Radio')"
+                            :loading="localRequest === 'set-enabled'"
+                            @change="wifiToggleChanged" />
+                        <v-btn
+                            class="touch-button"
+                            color="primary"
+                            large
+                            :disabled="!canScan"
+                            :loading="localRequest === 'scan'"
+                            @click="scanNetworks">
+                            <v-icon left>{{ mdiRefresh }}</v-icon>
+                            {{ $t('Wifi.Rescan') }}
+                        </v-btn>
+                    </div>
                 </v-card-title>
 
                 <v-divider />
@@ -124,12 +137,7 @@
                                     <v-chip v-if="network.saved" class="ml-2" x-small outlined>
                                         {{ $t('Wifi.Saved') }}
                                     </v-chip>
-                                    <v-chip
-                                        v-if="isCurrentNetwork(network)"
-                                        class="ml-2"
-                                        color="primary"
-                                        x-small
-                                        dark>
+                                    <v-chip v-if="isCurrentNetwork(network)" class="ml-2" color="primary" x-small dark>
                                         {{ $t('Wifi.Connected') }}
                                     </v-chip>
                                 </v-list-item-subtitle>
@@ -229,11 +237,7 @@
                     <v-alert v-if="selectedNetworkIsCurrent" type="warning" prominent>
                         {{ $t('Wifi.ForgetCurrentWarning') }}
                     </v-alert>
-                    <v-alert
-                        v-if="printerIsPrinting && selectedNetworkIsCurrent"
-                        class="mb-0"
-                        type="warning"
-                        prominent>
+                    <v-alert v-if="printerIsPrinting && selectedNetworkIsCurrent" class="mb-0" type="warning" prominent>
                         {{ $t('Wifi.PrintingWarning') }}
                     </v-alert>
                 </v-card-text>
@@ -243,6 +247,26 @@
                     </v-btn>
                     <v-btn class="touch-button" color="error" large :disabled="isBusy" @click="confirmForget">
                         {{ $t('Wifi.Forget') }}
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="disableDialog" max-width="560" persistent>
+            <v-card>
+                <v-card-title>{{ $t('Wifi.DisableTitle') }}</v-card-title>
+                <v-card-text class="pt-4 text-body-1">
+                    <p>{{ $t('Wifi.DisableDescription', { ssid: currentSsid }) }}</p>
+                    <v-alert v-if="printerIsPrinting" class="mb-0" type="warning" prominent>
+                        {{ $t('Wifi.PrintingWarning') }}
+                    </v-alert>
+                </v-card-text>
+                <v-card-actions class="pa-4 wifi-dialog-actions">
+                    <v-btn class="touch-button" text large @click="closeDisableDialog">
+                        {{ $t('Wifi.Cancel') }}
+                    </v-btn>
+                    <v-btn class="touch-button" color="error" large :disabled="isBusy" @click="confirmDisable">
+                        {{ $t('Wifi.Disable') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -258,11 +282,13 @@ import {
     canRunWifiBackgroundScan,
     getVisibleWifiError,
     getWifiConnectionSignature,
+    isWifiRadioEnabled,
     isCurrentWifiNetwork,
     isValidWifiPassword,
     shouldDisplayWifiOperation,
     shouldFinalizeWifiUserOperation,
     sortWifiNetworks,
+    supportsWifiRadioToggle,
     WifiPageLifecycle,
     WifiScanScheduler,
     WifiSingleFlight,
@@ -288,7 +314,7 @@ import {
     mdiWifiStrengthOutline,
 } from '@mdi/js'
 
-type LocalRequest = 'status' | 'scan' | 'connect' | 'forget' | null
+type LocalRequest = 'status' | 'scan' | 'connect' | 'forget' | 'set-enabled' | null
 
 const POLL_INTERVAL_MS = 10000
 const SCAN_COOLDOWN_MS = 10000
@@ -336,6 +362,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     passwordDialog = false
     connectConfirmDialog = false
     forgetDialog = false
+    disableDialog = false
     showPassword = false
     password = ''
     selectedNetwork: WifiNetwork | null = null
@@ -370,6 +397,22 @@ export default class Wifi extends Mixins(BaseMixin) {
         return this.$store.state.server.wifi?.revision ?? 0
     }
 
+    get wifiToggleSupported(): boolean {
+        return supportsWifiRadioToggle(this.wifiStatus)
+    }
+
+    get wifiEnabled(): boolean {
+        return isWifiRadioEnabled(this.wifiStatus)
+    }
+
+    get wifiHardwareEnabled(): boolean {
+        return this.wifiToggleSupported && this.wifiStatus?.hardware_enabled === true
+    }
+
+    get wifiRadioDisabled(): boolean {
+        return this.wifiToggleSupported && this.wifiHardwareEnabled && !this.wifiEnabled
+    }
+
     get sortedNetworks(): WifiNetwork[] {
         return sortWifiNetworks(this.wifiStatus, this.networks)
     }
@@ -383,7 +426,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     get dialogIsOpen(): boolean {
-        return this.passwordDialog || this.connectConfirmDialog || this.forgetDialog
+        return this.passwordDialog || this.connectConfirmDialog || this.forgetDialog || this.disableDialog
     }
 
     get isOperationRunning(): boolean {
@@ -405,17 +448,24 @@ export default class Wifi extends Mixins(BaseMixin) {
         return (
             this.socketIsConnected &&
             Boolean(this.wifiStatus?.available) &&
+            this.wifiEnabled &&
             !this.isBusy &&
             this.clock >= this.scanAvailableAt
         )
     }
 
+    get canToggleWifi(): boolean {
+        return this.socketIsConnected && this.wifiToggleSupported && this.wifiHardwareEnabled && !this.isBusy
+    }
+
     get statusText(): string {
+        if (this.wifiRadioDisabled) return this.$t('Wifi.StatusDisabled').toString()
         if (!this.wifiStatus?.available) return this.$t('Wifi.StatusUnavailable').toString()
         return this.$t(`Wifi.Status.${this.wifiStatus.state}`).toString()
     }
 
     get statusColor(): string {
+        if (this.wifiRadioDisabled) return 'grey'
         if (!this.wifiStatus?.available || this.wifiStatus?.state === 'error') return 'error'
         if (this.wifiStatus?.state === 'connected') return 'primary'
         if (this.wifiStatus?.state === 'connecting') return 'warning'
@@ -423,6 +473,7 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     get statusIcon(): string {
+        if (this.wifiRadioDisabled) return mdiWifiOff
         if (!this.wifiStatus?.available || this.wifiStatus?.state === 'disconnected') return mdiWifiOff
         if (this.wifiStatus?.state === 'error') return mdiAlertOutline
         if (this.wifiStatus?.state === 'connected') return mdiCheckCircle
@@ -491,12 +542,14 @@ export default class Wifi extends Mixins(BaseMixin) {
     }
 
     get emptyNetworksText(): string {
+        if (this.wifiRadioDisabled) return this.$t('Wifi.RadioDisabledDescription').toString()
         if (this.localRequest === 'scan') return this.$t('Wifi.Scanning').toString()
         return this.$t('Wifi.NoNetworks').toString()
     }
 
     @Watch('wifiStatus', { deep: true })
     wifiStatusChanged(status: WifiStatus | null, previousStatus: WifiStatus | null) {
+        if (supportsWifiRadioToggle(status) && status?.enabled === false) this.disableDialog = false
         const connectionChanged = getWifiConnectionSignature(status) !== getWifiConnectionSignature(previousStatus)
         if (connectionChanged && this.automaticRefreshEnabled) this.scanScheduler.requestAfterSettle()
 
@@ -551,6 +604,7 @@ export default class Wifi extends Mixins(BaseMixin) {
                 pageVisible: this.pageVisible,
                 operationRunning: this.isOperationRunning,
                 adapterAvailable: Boolean(this.wifiStatus?.available),
+                radioEnabled: this.wifiEnabled,
                 hasError: Boolean(this.wifiStatus?.last_error),
             })
         ) {
@@ -607,6 +661,56 @@ export default class Wifi extends Mixins(BaseMixin) {
         return mdiWifiStrength4
     }
 
+    wifiToggleChanged(enabled: boolean) {
+        if (!this.canToggleWifi || enabled === this.wifiEnabled) return
+        this.requestError = null
+        if (!enabled && this.wifiStatus?.connected) {
+            this.disableDialog = true
+            return
+        }
+        void this.setWifiEnabled(enabled)
+    }
+
+    confirmDisable() {
+        if (this.isBusy) return
+        this.disableDialog = false
+        void this.setWifiEnabled(false)
+    }
+
+    closeDisableDialog() {
+        this.disableDialog = false
+        this.runPendingScan()
+    }
+
+    async setWifiEnabled(enabled: boolean) {
+        if (
+            !this.isLocalKiosk ||
+            !this.wifiToggleSupported ||
+            !this.wifiHardwareEnabled ||
+            this.isBusy ||
+            enabled === this.wifiEnabled
+        )
+            return
+
+        this.localRequest = 'set-enabled'
+        this.requestError = null
+        if (!enabled) this.scanScheduler.cancelPending()
+        try {
+            const snapshot = await this.$socket.emitAndWait('machine.wifi.set_enabled', { enabled })
+            if (!this.pageLifecycle.active) return
+            await this.$store.dispatch('server/wifi/updateSnapshot', snapshot)
+            this.$toast.success(this.$t(enabled ? 'Wifi.EnableSucceeded' : 'Wifi.DisableSucceeded').toString())
+            if (enabled) this.scanScheduler.requestAfterSettle()
+        } catch (error: unknown) {
+            if (!this.pageLifecycle.active) return
+            this.requestError = this.normalizeRpcError(error)
+            await this.refreshStatus(false)
+        } finally {
+            this.localRequest = null
+            this.runPendingScan()
+        }
+    }
+
     securityText(network: WifiNetwork): string {
         return this.$t(network.security === 'open' ? 'Wifi.SecurityOpen' : 'Wifi.SecurityProtected').toString()
     }
@@ -659,6 +763,7 @@ export default class Wifi extends Mixins(BaseMixin) {
             !this.isLocalKiosk ||
             !this.socketIsConnected ||
             !this.wifiStatus?.available ||
+            !this.wifiEnabled ||
             this.isBusy ||
             this.clock < this.scanAvailableAt ||
             (background && (!this.pageVisible || this.dialogIsOpen || Boolean(this.wifiStatus.last_error)))
@@ -811,6 +916,7 @@ export default class Wifi extends Mixins(BaseMixin) {
             pageVisible: this.pageVisible,
             socketConnected: this.socketIsConnected,
             adapterAvailable: Boolean(this.wifiStatus?.available),
+            radioEnabled: this.wifiEnabled,
             connectionStable: this.wifiStatus?.state !== 'connecting' && !this.scanScheduler.settling,
             dialogOpen: this.dialogIsOpen,
             busy: this.isBusy,
@@ -854,6 +960,15 @@ export default class Wifi extends Mixins(BaseMixin) {
 
 .wifi-card-title {
     gap: 8px;
+}
+
+.wifi-card-actions {
+    gap: 8px;
+}
+
+.wifi-radio-switch {
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .wifi-status-row {
@@ -906,6 +1021,16 @@ export default class Wifi extends Mixins(BaseMixin) {
 
     .wifi-card-title .v-btn {
         width: 100%;
+    }
+
+    .wifi-card-actions {
+        align-items: stretch !important;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .wifi-radio-switch {
+        margin-right: 0 !important;
     }
 
     .wifi-current-grid {

@@ -14,9 +14,17 @@ export const isValidWifiPassword = (password: string): boolean => {
 export const isCurrentWifiNetwork = (status: WifiStatus | null, network: Pick<WifiNetwork, 'ssid'>): boolean =>
     Boolean(status?.connected && status.ssid && status.ssid === network.ssid)
 
+export const supportsWifiRadioToggle = (status: WifiStatus | null): boolean =>
+    typeof status?.enabled === 'boolean' && typeof status?.hardware_enabled === 'boolean'
+
+export const isWifiRadioEnabled = (status: WifiStatus | null): boolean =>
+    supportsWifiRadioToggle(status) ? status?.enabled === true : true
+
 export const getWifiConnectionSignature = (status: WifiStatus | null): string =>
     JSON.stringify([
         status?.available ?? false,
+        supportsWifiRadioToggle(status) ? status?.enabled : null,
+        supportsWifiRadioToggle(status) ? status?.hardware_enabled : null,
         status?.state ?? 'unavailable',
         status?.ssid ?? null,
         status?.ip_address ?? null,
@@ -43,7 +51,7 @@ export const shouldDisplayWifiBackendError = (status: WifiStatus | null): boolea
 
 export const getVisibleWifiError = <T>(requestError: T | null, status: WifiStatus | null): T | WifiError | null => {
     if (requestError) return requestError
-    return shouldDisplayWifiBackendError(status) ? status?.last_error ?? null : null
+    return shouldDisplayWifiBackendError(status) ? (status?.last_error ?? null) : null
 }
 
 export const shouldFinalizeWifiUserOperation = (operation: WifiOperation): boolean =>
@@ -53,17 +61,23 @@ export interface WifiInitialScanReadiness {
     pageVisible: boolean
     operationRunning: boolean
     adapterAvailable: boolean
+    radioEnabled: boolean
     hasError: boolean
 }
 
 export const canRunInitialWifiScan = (readiness: WifiInitialScanReadiness): boolean =>
-    readiness.pageVisible && !readiness.operationRunning && readiness.adapterAvailable && !readiness.hasError
+    readiness.pageVisible &&
+    !readiness.operationRunning &&
+    readiness.adapterAvailable &&
+    readiness.radioEnabled &&
+    !readiness.hasError
 
 export interface WifiBackgroundScanReadiness {
     localKiosk: boolean
     pageVisible: boolean
     socketConnected: boolean
     adapterAvailable: boolean
+    radioEnabled: boolean
     connectionStable: boolean
     dialogOpen: boolean
     busy: boolean
@@ -76,6 +90,7 @@ export const canRunWifiBackgroundScan = (readiness: WifiBackgroundScanReadiness)
     readiness.pageVisible &&
     readiness.socketConnected &&
     readiness.adapterAvailable &&
+    readiness.radioEnabled &&
     readiness.connectionStable &&
     !readiness.dialogOpen &&
     !readiness.busy &&

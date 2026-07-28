@@ -5,11 +5,13 @@ import {
     getVisibleWifiError,
     getWifiConnectionSignature,
     isCurrentWifiNetwork,
+    isWifiRadioEnabled,
     isValidWifiPassword,
     shouldDisplayWifiBackendError,
     shouldDisplayWifiOperation,
     shouldFinalizeWifiUserOperation,
     sortWifiNetworks,
+    supportsWifiRadioToggle,
     WifiPageLifecycle,
     WifiScanScheduler,
     WifiSingleFlight,
@@ -19,6 +21,8 @@ import type { WifiNetwork, WifiStatus } from '@/types/moonraker/MachineRPC'
 const status: WifiStatus = {
     interface: 'wlp1s0',
     available: true,
+    enabled: true,
+    hardware_enabled: true,
     state: 'connected',
     connected: true,
     ssid: 'Workshop',
@@ -76,6 +80,21 @@ describe('Wifi live network presentation', () => {
         expect(getWifiConnectionSignature({ ...status, state: 'connecting' })).not.toBe(signature)
         expect(getWifiConnectionSignature({ ...status, ssid: 'Office' })).not.toBe(signature)
         expect(getWifiConnectionSignature({ ...status, ip_address: '192.168.1.21' })).not.toBe(signature)
+        expect(getWifiConnectionSignature({ ...status, enabled: false })).not.toBe(signature)
+        expect(getWifiConnectionSignature({ ...status, hardware_enabled: false })).not.toBe(signature)
+    })
+
+    it('detects radio-control support while keeping old backends enabled', () => {
+        const legacyStatus = {
+            ...status,
+            enabled: undefined,
+            hardware_enabled: undefined,
+        } as unknown as WifiStatus
+
+        expect(supportsWifiRadioToggle(status)).toBe(true)
+        expect(isWifiRadioEnabled(status)).toBe(true)
+        expect(supportsWifiRadioToggle(legacyStatus)).toBe(false)
+        expect(isWifiRadioEnabled(legacyStatus)).toBe(true)
     })
 
     it('keeps background scan operation state and backend errors out of the visible UI', () => {
@@ -142,11 +161,13 @@ describe('Wifi background refresh scheduling', () => {
             pageVisible: true,
             operationRunning: false,
             adapterAvailable: true,
+            radioEnabled: true,
             hasError: false,
         }
 
         expect(canRunInitialWifiScan(ready)).toBe(true)
         expect(canRunInitialWifiScan({ ...ready, pageVisible: false })).toBe(false)
+        expect(canRunInitialWifiScan({ ...ready, radioEnabled: false })).toBe(false)
     })
 
     it('coalesces rapid connection changes into one settled scan request', () => {
@@ -175,6 +196,7 @@ describe('Wifi background refresh scheduling', () => {
             pageVisible: true,
             socketConnected: true,
             adapterAvailable: true,
+            radioEnabled: true,
             connectionStable: true,
             dialogOpen: false,
             busy: false,
@@ -186,6 +208,7 @@ describe('Wifi background refresh scheduling', () => {
             { ...ready, pageVisible: false },
             { ...ready, socketConnected: false },
             { ...ready, adapterAvailable: false },
+            { ...ready, radioEnabled: false },
             { ...ready, connectionStable: false },
             { ...ready, dialogOpen: true },
             { ...ready, busy: true },
@@ -218,6 +241,7 @@ describe('Wifi background refresh scheduling', () => {
                     pageVisible: true,
                     socketConnected: true,
                     adapterAvailable: true,
+                    radioEnabled: true,
                     connectionStable: !scheduler.settling,
                     dialogOpen: false,
                     busy: false,

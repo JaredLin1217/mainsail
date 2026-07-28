@@ -3,8 +3,10 @@ import type { WifiNetwork, WifiNetworksSnapshot, WifiStatus } from '@/types/moon
 import type { ServerWifiState } from './types'
 import { getDefaultState } from './index'
 
-export const normalizeWifiNetworks = (status: WifiStatus, networks: WifiNetwork[]): WifiNetwork[] =>
-    networks.map((network) => {
+export const normalizeWifiNetworks = (status: WifiStatus, networks: WifiNetwork[]): WifiNetwork[] => {
+    if (status.enabled === false) return []
+
+    return networks.map((network) => {
         const connected = Boolean(status.connected && status.ssid && network.ssid === status.ssid)
 
         return {
@@ -13,6 +15,7 @@ export const normalizeWifiNetworks = (status: WifiStatus, networks: WifiNetwork[
             strength: connected && status.strength !== null ? status.strength : network.strength,
         }
     })
+}
 
 export const mutations: MutationTree<ServerWifiState> = {
     reset(state) {

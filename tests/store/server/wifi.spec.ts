@@ -8,6 +8,8 @@ import { actions as socketActions } from '@/store/socket/actions'
 const connectedStatus: WifiStatus = {
     interface: 'wlp1s0',
     available: true,
+    enabled: true,
+    hardware_enabled: true,
     state: 'connected',
     connected: true,
     ssid: 'Workshop',
@@ -72,6 +74,24 @@ describe('server/wifi state consistency', () => {
         expect(state.networks[0].connected).toBe(false)
     })
 
+    it('clears stale networks when the WiFi radio is disabled', () => {
+        const state = getDefaultState()
+        state.networks = [office, workshop]
+
+        mutations.setStatus(state, {
+            ...connectedStatus,
+            available: true,
+            enabled: false,
+            state: 'disconnected',
+            connected: false,
+            ssid: null,
+            strength: null,
+            ip_address: null,
+        })
+
+        expect(state.networks).toEqual([])
+    })
+
     it('applies a scan or event snapshot with one atomic mutation', () => {
         const snapshot: WifiNetworksSnapshot = {
             status: connectedStatus,
@@ -105,11 +125,10 @@ describe('server/wifi state consistency', () => {
 
         expect(typeof onMessage).toBe('function')
         if (typeof onMessage !== 'function') return
-        onMessage.call(
-            {} as never,
-            { dispatch, commit: vi.fn() } as never,
-            { method: 'notify_wifi_networks_changed', params: [snapshot] }
-        )
+        onMessage.call({} as never, { dispatch, commit: vi.fn() } as never, {
+            method: 'notify_wifi_networks_changed',
+            params: [snapshot],
+        })
 
         expect(dispatch).toHaveBeenCalledWith('server/wifi/updateSnapshot', snapshot, { root: true })
     })
@@ -132,11 +151,10 @@ describe('server/wifi state consistency', () => {
         expect(typeof updateStatusIfRevision).toBe('function')
         if (typeof updateStatusIfRevision !== 'function') return
         const applyResponse = statusResponse.then((response) =>
-            updateStatusIfRevision.call(
-                {} as never,
-                { commit, state } as never,
-                { status: response, revision: requestRevision }
-            )
+            updateStatusIfRevision.call({} as never, { commit, state } as never, {
+                status: response,
+                revision: requestRevision,
+            })
         )
         mutations.setSnapshot(state, newerSnapshot)
         resolveStatus?.(connectedStatus)
@@ -155,11 +173,10 @@ describe('server/wifi state consistency', () => {
 
         expect(typeof updateStatusIfRevision).toBe('function')
         if (typeof updateStatusIfRevision !== 'function') return
-        const applied = updateStatusIfRevision.call(
-            {} as never,
-            { commit, state } as never,
-            { status: connectedStatus, revision: state.revision }
-        )
+        const applied = updateStatusIfRevision.call({} as never, { commit, state } as never, {
+            status: connectedStatus,
+            revision: state.revision,
+        })
 
         expect(applied).toBe(true)
         expect(commit).toHaveBeenCalledWith('setStatus', connectedStatus)
