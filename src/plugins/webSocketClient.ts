@@ -7,20 +7,24 @@ import type { RPCMethods, RPCParams, RPCResult } from '@/types/moonraker'
 export class WebSocketClient {
     url = ''
     instance: WebSocket | null = null
-    maxReconnects = 5
+    maxReconnects = 0
     reconnectInterval = 1000
+    maxReconnectInterval = 15000
     reconnects = 0
     keepAliveTimeout = 1000
     messageId: number = 0
-    timerId: number | null = null
     store: Store<RootState> | null = null
     waits: Wait[] = []
-    heartbeatTimer: number | null = null
+    heartbeatTimer: ReturnType<typeof setTimeout> | null = null
+    reconnectTimer: ReturnType<typeof setTimeout> | null = null
+    connectionGeneration = 0
+    closeRequested = false
 
     constructor(options: WebSocketPluginOptions) {
         this.url = options.url
-        this.maxReconnects = options.maxReconnects || 5
-        this.reconnectInterval = options.reconnectInterval || 1000
+        this.maxReconnects = options.maxReconnects ?? 0
+        this.reconnectInterval = options.reconnectInterval ?? 1000
+        this.maxReconnectInterval = options.maxReconnectInterval ?? 15000
         this.store = options.store
     }
 
@@ -91,37 +95,47 @@ export class WebSocketClient {
         this.removeWaitById(wait.id)
     }
 
-    async connect() {
+    async connect(): Promise<void> {
+        this.closeRequested = false
+        this.reconnects = 0
+        this.clearReconnectTimer()
         this.store?.dispatch('socket/setData', {
             isConnecting: true,
         })
+        this.openSocket()
+    }
 
-        this.instance?.close()
-        this.instance = new WebSocket(this.url)
+    openSocket(): void {
+        this.disposeSocket()
+        const generation = ++this.connectionGeneration
+        const socket = new WebSocket(this.url)
+        this.instance = socket
 
-        this.instance.onopen = () => {
+        socket.onopen = (event) => {
+            if (!this.isCurrentSocket(socket, generation)) return
             this.reconnects = 0
             this.store?.dispatch('socket/onOpen', event)
         }
 
-        this.instance.onclose = (e) => {
+        socket.onclose = (event) => {
+            if (!this.isCurrentSocket(socket, generation)) return
+
+            this.clearHeartbeatTimer()
+            this.disposeSocket()
             this.clearWaits(new Error('WebSocket connection closed'))
-            if (e.wasClean || this.reconnects >= this.maxReconnects) {
-                this.store?.dispatch('socket/onClose', e)
-                return
-            }
+            this.store?.dispatch('socket/onClose', event)
 
-            this.reconnects++
-            setTimeout(() => {
-                this.connect()
-            }, this.reconnectInterval)
+            if (this.closeRequested) return
+            this.scheduleReconnect()
         }
 
-        this.instance.onerror = () => {
-            this.instance?.close()
+        socket.onerror = () => {
+            if (!this.isCurrentSocket(socket, generation)) return
+            socket.close()
         }
 
-        this.instance.onmessage = (msg) => {
+        socket.onmessage = (msg) => {
+            if (!this.isCurrentSocket(socket, generation)) return
             if (this.store === null) return
 
             // websocket is alive
@@ -141,7 +155,56 @@ export class WebSocketClient {
     }
 
     close(): void {
-        this.instance?.close()
+        this.closeRequested = true
+        this.clearReconnectTimer()
+        this.clearHeartbeatTimer()
+        this.clearWaits(new Error('WebSocket connection closed'))
+        this.disposeSocket()
+        this.store?.dispatch('socket/onClose')
+    }
+
+    scheduleReconnect(): void {
+        if (this.closeRequested || this.reconnectTimer !== null) return
+        if (this.maxReconnects > 0 && this.reconnects >= this.maxReconnects) return
+
+        this.reconnects++
+        const exponent = Math.min(this.reconnects - 1, 30)
+        const delay = Math.min(this.reconnectInterval * 2 ** exponent, this.maxReconnectInterval)
+        this.store?.dispatch('socket/setData', { isConnecting: true })
+        this.reconnectTimer = setTimeout(() => {
+            this.reconnectTimer = null
+            if (this.closeRequested) return
+            this.openSocket()
+        }, delay)
+    }
+
+    disposeSocket(): void {
+        const socket = this.instance
+        this.instance = null
+        this.connectionGeneration++
+        if (socket === null) return
+
+        socket.onopen = null
+        socket.onclose = null
+        socket.onerror = null
+        socket.onmessage = null
+        if (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN) socket.close()
+    }
+
+    isCurrentSocket(socket: WebSocket, generation: number): boolean {
+        return this.instance === socket && this.connectionGeneration === generation
+    }
+
+    clearReconnectTimer(): void {
+        if (this.reconnectTimer === null) return
+        clearTimeout(this.reconnectTimer)
+        this.reconnectTimer = null
+    }
+
+    clearHeartbeatTimer(): void {
+        if (this.heartbeatTimer === null) return
+        clearTimeout(this.heartbeatTimer)
+        this.heartbeatTimer = null
     }
 
     getWaitById(id: number): Wait | null {
@@ -260,13 +323,12 @@ export class WebSocketClient {
     }
 
     heartbeat(): void {
-        if (this.heartbeatTimer) clearInterval(this.heartbeatTimer)
+        this.clearHeartbeatTimer()
 
-        this.heartbeatTimer = window.setTimeout(() => {
+        this.heartbeatTimer = setTimeout(() => {
             if (this.instance?.readyState !== WebSocket.OPEN || !this.store) return
 
-            this.close()
-            this.store?.dispatch('socket/onClose')
+            this.instance.close()
         }, 10000)
     }
 }
@@ -281,6 +343,7 @@ export interface WebSocketPluginOptions {
     url: string
     maxReconnects?: number
     reconnectInterval?: number
+    maxReconnectInterval?: number
     store: Store<RootState>
 }
 
