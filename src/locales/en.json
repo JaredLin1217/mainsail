@@ -1058,7 +1058,13 @@
             "TemperaturesInChart": "Temperature [°C]",
             "TempTooHigh": "Temperature too high for {name}! (max: {max})",
             "TempTooLow": "Temperature too low for {name}! (min: {min})",
-            "TurnHeaterOff": "Turn Heater Off"
+            "TurnHeaterOff": "Turn Heater Off",
+            "ZThermal": {
+                "Disabled": "Disabled",
+                "Enabled": "Enabled",
+                "NotReady": "Not ready",
+                "Ready": "Ready"
+            }
         },
         "ToolheadControlPanel": {
             "Absolute": "absolute",

@@ -955,7 +955,13 @@
             "Target": "目標",
             "TemperaturesInChart": "溫度 [°C]",
             "TempTooHigh": "溫度{name}過高！(最高：{max})",
-            "TempTooLow": "溫度{name}過低！(最低：{min})"
+            "TempTooLow": "溫度{name}過低！(最低：{min})",
+            "ZThermal": {
+                "Disabled": "已停用",
+                "Enabled": "已啟用",
+                "NotReady": "模型未就緒",
+                "Ready": "模型就緒"
+            }
         },
         "ToolheadControlPanel": {
             "Absolute": "絕對座標",

@@ -72,6 +72,16 @@ export default class TemperaturePanelList extends Mixins(BaseMixin) {
         return this.$store.state.printer?.heaters?.available_sensors ?? []
     }
 
+    get availableTemperatureObjects(): string[] {
+        const objects = [...this.available_sensors]
+
+        if ('z_thermal_adjust' in this.$store.state.printer && !objects.includes('z_thermal_adjust')) {
+            objects.push('z_thermal_adjust')
+        }
+
+        return objects
+    }
+
     get available_monitors() {
         return this.$store.state.printer?.heaters?.available_monitors ?? []
     }
@@ -99,7 +109,7 @@ export default class TemperaturePanelList extends Mixins(BaseMixin) {
     }
 
     get temperature_sensors() {
-        return this.filterNamesAndSort(this.available_sensors).filter((fullName: string) => {
+        return this.filterNamesAndSort(this.availableTemperatureObjects).filter((fullName: string) => {
             if (this.available_heaters.includes(fullName)) return false
             if (this.temperature_fans.includes(fullName)) return false
 

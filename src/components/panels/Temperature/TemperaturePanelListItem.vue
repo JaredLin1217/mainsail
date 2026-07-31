@@ -7,9 +7,20 @@
         </td>
         <td class="name">
             <span class="cursor-pointer" @click="openEditDialog">{{ formatName }}</span>
+            <template v-if="isMultiSourceZThermalAdjust">
+                <div v-for="source in zThermalSources" :key="source.name">
+                    <small>{{ source.displayName }}</small>
+                </div>
+            </template>
         </td>
         <td v-if="!isResponsiveMobile" class="state">
-            <v-tooltip v-if="state !== null" top>
+            <template v-if="isMultiSourceZThermalAdjust">
+                <div>{{ zThermalEnabledLabel }}</div>
+                <div>
+                    <small :class="zThermalReadyClass">{{ zThermalReadyLabel }}</small>
+                </div>
+            </template>
+            <v-tooltip v-else-if="state !== null" top>
                 <template #activator="{ on, attrs }">
                     <div v-bind="attrs" v-on="on">{{ formatState }}</div>
                 </template>
@@ -17,29 +28,43 @@
             </v-tooltip>
         </td>
         <td class="current">
-            <v-tooltip top :disabled="!(measured_min_temp !== null || measured_max_temp !== null)">
-                <template #activator="{ on, attrs }">
-                    <span style="cursor: default" v-bind="attrs" v-on="on">
-                        {{ formatTemperature }}
+            <template v-if="isMultiSourceZThermalAdjust">
+                <div>{{ formatZAdjustment(zThermalCurrentAdjustment) }}</div>
+                <div v-for="source in zThermalSources" :key="source.name">
+                    <small>{{ formatZThermalTemperature(source.temperature) }}</small>
+                </div>
+            </template>
+            <template v-else>
+                <v-tooltip top :disabled="!(measured_min_temp !== null || measured_max_temp !== null)">
+                    <template #activator="{ on, attrs }">
+                        <span style="cursor: default" v-bind="attrs" v-on="on">
+                            {{ formatTemperature }}
+                        </span>
+                    </template>
+                    <span>
+                        {{ $t('Panels.TemperaturePanel.Max') }}: {{ measured_max_temp }}°C
+                        <br />
+                        {{ $t('Panels.TemperaturePanel.Min') }}: {{ measured_min_temp }}°C
                     </span>
-                </template>
-                <span>
-                    {{ $t('Panels.TemperaturePanel.Max') }}: {{ measured_max_temp }}°C
-                    <br />
-                    {{ $t('Panels.TemperaturePanel.Min') }}: {{ measured_min_temp }}°C
-                </span>
-            </v-tooltip>
-            <div v-if="rpm !== null">
-                <small :class="rpmClass">{{ rpm }} RPM</small>
-            </div>
-            <temperature-panel-list-item-additional-sensor
-                v-if="additionalSensorName"
-                :object-name="objectName"
-                :additional-object-name="additionalSensorName" />
+                </v-tooltip>
+                <div v-if="rpm !== null">
+                    <small :class="rpmClass">{{ rpm }} RPM</small>
+                </div>
+                <temperature-panel-list-item-additional-sensor
+                    v-if="additionalSensorName"
+                    :object-name="objectName"
+                    :additional-object-name="additionalSensorName" />
+            </template>
         </td>
         <td class="target">
+            <template v-if="isMultiSourceZThermalAdjust">
+                <div :class="zThermalTargetClass">{{ formatZAdjustment(zThermalTargetAdjustment) }}</div>
+                <div v-for="source in zThermalSources" :key="source.name">
+                    <small>{{ formatZAdjustment(source.contribution) }}</small>
+                </div>
+            </template>
             <temperature-input
-                v-if="command !== null"
+                v-else-if="command !== null"
                 :name="name"
                 :target="target"
                 :presets="presets"
@@ -93,6 +118,13 @@ import {
 import { additionalSensors, opacityHeaterActive, opacityHeaterInactive } from '@/store/variables'
 import { CLOSE_CONTEXT_MENU, EventBus } from '@/plugins/eventBus'
 
+interface ZThermalSource {
+    contribution: number | null
+    displayName: string
+    name: string
+    temperature: number | null
+}
+
 @Component
 export default class TemperaturePanelListItem extends Mixins(BaseMixin) {
     mdiCog = mdiCog
@@ -120,6 +152,58 @@ export default class TemperaturePanelListItem extends Mixins(BaseMixin) {
         if (!(lowerCaseObjectName in (this.$store.state.printer?.configfile?.settings ?? {}))) return {}
 
         return this.$store.state.printer?.configfile?.settings[lowerCaseObjectName]
+    }
+
+    get isMultiSourceZThermalAdjust(): boolean {
+        return this.objectName === 'z_thermal_adjust' && this.printerObject?.mode === 'multi_source'
+    }
+
+    get zThermalSources(): ZThermalSource[] {
+        if (!this.isMultiSourceZThermalAdjust) return []
+
+        const sources = this.printerObject?.sources
+        if (sources === null || typeof sources !== 'object') return []
+
+        return Object.entries(sources)
+            .map(([name, source]) => {
+                const status = source as Record<string, unknown>
+
+                return {
+                    contribution: this.toFiniteNumber(status.contribution),
+                    displayName: convertName(name),
+                    name,
+                    temperature: this.toFiniteNumber(status.temperature),
+                }
+            })
+            .sort((a, b) => a.displayName.localeCompare(b.displayName))
+    }
+
+    get zThermalCurrentAdjustment(): number | null {
+        return this.toFiniteNumber(this.printerObject?.current_z_adjust)
+    }
+
+    get zThermalTargetAdjustment(): number | null {
+        return this.toFiniteNumber(this.printerObject?.target_z_adjust)
+    }
+
+    get zThermalEnabledLabel() {
+        const key = this.printerObject?.enabled ? 'Enabled' : 'Disabled'
+
+        return this.$t(`Panels.TemperaturePanel.ZThermal.${key}`)
+    }
+
+    get zThermalReadyLabel() {
+        const key = this.printerObject?.model_ready ? 'Ready' : 'NotReady'
+
+        return this.$t(`Panels.TemperaturePanel.ZThermal.${key}`)
+    }
+
+    get zThermalReadyClass(): string {
+        return this.printerObject?.model_ready ? 'success--text' : 'warning--text'
+    }
+
+    get zThermalTargetClass(): string {
+        return this.printerObject?.limit_active ? 'warning--text' : ''
     }
 
     get name() {
@@ -312,6 +396,26 @@ export default class TemperaturePanelListItem extends Mixins(BaseMixin) {
 
     beforeDestroy() {
         EventBus.$off(CLOSE_CONTEXT_MENU, this.closeContextMenu)
+    }
+
+    toFiniteNumber(value: unknown): number | null {
+        if (typeof value !== 'number' || !Number.isFinite(value)) return null
+
+        return value
+    }
+
+    formatZAdjustment(value: number | null): string {
+        if (value === null) return '--'
+
+        const sign = value > 0 ? '+' : ''
+
+        return `${sign}${value.toFixed(3)} mm`
+    }
+
+    formatZThermalTemperature(value: number | null): string {
+        if (value === null) return '--'
+
+        return `${value.toFixed(1)}°C`
     }
 
     openContextMenu(event: MouseEvent | LongpressEvent) {

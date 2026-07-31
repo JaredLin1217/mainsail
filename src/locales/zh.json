@@ -1047,7 +1047,13 @@
             "TemperaturesInChart": "温度 [°C]",
             "TempTooHigh": "温度{name}过高！(最高：{max})",
             "TempTooLow": "温度{name}过低！(最低：{min})",
-            "TurnHeaterOff": "关闭加热"
+            "TurnHeaterOff": "关闭加热",
+            "ZThermal": {
+                "Disabled": "已停用",
+                "Enabled": "已启用",
+                "NotReady": "模型未就绪",
+                "Ready": "模型就绪"
+            }
         },
         "ToolheadControlPanel": {
             "Absolute": "绝对坐标",
