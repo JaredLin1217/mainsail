@@ -1198,7 +1198,7 @@
             "ZOffsetIncrements": "Z轴偏移调整幅度(mm)",
             "ZOffsetSaveOption": "Z轴偏移保存选项",
             "ZOffsetSaveOptionDescription": "更改选项以保存Z轴偏移",
-            "ZTiltAdjust": "Z倾斜调平"
+            "ZTiltAdjust": "Z倾斜调平{isDefault}"
         },
         "DashboardTab": {
             "Dashboard": "控制面板",
@@ -1611,6 +1611,7 @@
         "Create": "新建",
         "CreateNewDirectory": "新建文件夹",
         "CurrentPath": "当前路径",
+        "Delete": "删除",
         "DeleteDirectory": "删除文件夹",
         "DeleteDirectoryQuestion": "你确定要删除\"{name}\"文件夹和里面所有的文件吗？",
         "DeleteSelectedQuestion": "你确定要删除选中的{count}个文件吗？",

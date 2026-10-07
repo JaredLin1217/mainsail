@@ -16,6 +16,10 @@ export default i18n
 
 export async function setAndLoadLocale(lang: string) {
     const locales = await import(`../locales/${lang}.json`)
+    if (lang !== 'en' && !i18n.availableLocales.includes('en')) {
+        const fallback = await import('../locales/en.json')
+        i18n.setLocaleMessage('en', fallback.default)
+    }
     i18n.setLocaleMessage(lang, locales.default)
     i18n.locale = lang
     return locales
