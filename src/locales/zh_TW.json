@@ -1219,6 +1219,7 @@
             "GroupSubTitle": "開始： {start}，結束： {end}",
             "LightGroups": "{name} - 群組",
             "LightPresets": "{name} - 預設",
+            "Miscellaneous": "其他設定",
             "Name": "名稱",
             "NoDevicesFound": "未找到設備",
             "NoGroupFound": "找不到群組",
@@ -1226,6 +1227,9 @@
             "Presets": "預設",
             "Start": "開始",
             "StartDescription": "該組的第一個 LED。"
+        },
+        "NavigationTab": {
+            "Navigation": "導覽列"
         },
         "PresetsTab": {
             "AddPreset": "新增預設",
