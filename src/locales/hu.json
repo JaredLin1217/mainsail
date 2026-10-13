@@ -885,6 +885,8 @@
             "Ok": "OK",
             "SaveConfig": "BÁLLÍTÁS_MENTÉSE",
             "SaveInfoDescription": "Új Z-eltolás kiszámítva és regisztrálva. Kattints a \"BÁLLÍTÁS_MENTÉSE\" gombra az új Z-eltolás eltárolásához a printer.cfg-be és indítsd újra a Klippert.",
+            "SaveInfoDescriptionNoRestart": "Mentse a Z-eltolást a Klipper újraindítása nélkül. A nyomtató azonnal alaphelyzetbe áll, hogy aktiválja azt.",
+            "SaveInfoDescriptionNoRestartPrint": "Mentse a Z-eltolást a Klipper újraindítása nélkül. A jelenlegi nyomtatás a következő Z-alaphelyzetbe állásig megőrzi a korábbi eltolást.",
             "SaveInfoDescriptionPrint": "Új Z-eltolás kiszámítva és regisztrálva. Nyomtatás után kattints a \"BÁLLÍTÁS MENTÉSE\" gombra a felső sávban, a printer.cfg-be való mentéshez és a Klipper újraindításához.",
             "SaveInfoHeadline": "Információ"
         }

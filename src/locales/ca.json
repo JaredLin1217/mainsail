@@ -1,3 +1,9 @@
 {
+    "Panels": {
+        "ZoffsetPanel": {
+            "SaveInfoDescriptionNoRestart": "Deseu el desplaçament Z sense reiniciar Klipper. La impressora farà l'origen immediatament per activar-lo.",
+            "SaveInfoDescriptionNoRestartPrint": "Deseu el desplaçament Z sense reiniciar Klipper. La impressió actual manté el desplaçament fins a la propera cerca de l'origen Z."
+        }
+    },
     "title": "Catalan"
 }

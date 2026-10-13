@@ -98,19 +98,20 @@
                         :icon="mdiInformation"
                         card-class="zoffset-saveinfo-dialog"
                         :margin-bottom="false">
-                        <v-card-text v-if="printerIsPrinting" class="mt-3">
-                            {{ $t('Panels.ZoffsetPanel.SaveInfoDescriptionPrint') }}
+                        <v-card-text class="mt-3">
+                            {{ $t(saveInfoDescription) }}
                         </v-card-text>
-                        <v-card-text v-else class="mt-3">
-                            {{ $t('Panels.ZoffsetPanel.SaveInfoDescription') }}
-                        </v-card-text>
-                        <v-card-actions v-if="printerIsPrinting">
+                        <v-card-actions v-if="printerIsPrinting && !supportsLiveZOffsetSave">
                             <v-spacer></v-spacer>
                             <v-btn text @click="saveOffsetDialog = false">{{ $t('Panels.ZoffsetPanel.Ok') }}</v-btn>
                         </v-card-actions>
                         <v-card-actions v-else>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" text @click="saveConfig">
+                            <v-btn
+                                color="primary"
+                                text
+                                :loading="loadings.includes('zOffsetSaveConfig')"
+                                @click="saveConfig">
                                 {{ $t('Panels.ZoffsetPanel.SaveConfig') }}
                             </v-btn>
                             <v-btn text @click="saveOffsetDialog = false">{{ $t('Panels.ZoffsetPanel.Later') }}</v-btn>
@@ -150,6 +151,27 @@ export default class ZoffsetControl extends Mixins(BaseMixin, ZoffsetMixin) {
 
     saveOffsetDialog = false
 
+    get supportsLiveZOffsetSave(): boolean {
+        const command = this.offsetZSaveOption ?? this.autoSaveZOffsetOption
+        return (
+            command === 'Z_OFFSET_APPLY_ENDSTOP' &&
+            'Z_OFFSET_SAVE_ENDSTOP' in this.commands &&
+            '_Z_OFFSET_SAVE_ENDSTOP' in this.commands
+        )
+    }
+
+    get saveInfoDescription(): string {
+        if (this.supportsLiveZOffsetSave) {
+            return this.printerIsPrinting
+                ? 'Panels.ZoffsetPanel.SaveInfoDescriptionNoRestartPrint'
+                : 'Panels.ZoffsetPanel.SaveInfoDescriptionNoRestart'
+        }
+
+        return this.printerIsPrinting
+            ? 'Panels.ZoffsetPanel.SaveInfoDescriptionPrint'
+            : 'Panels.ZoffsetPanel.SaveInfoDescription'
+    }
+
     get offsetsZ() {
         return this.$store.state.gui.control.offsetsZ
     }
@@ -181,6 +203,12 @@ export default class ZoffsetControl extends Mixins(BaseMixin, ZoffsetMixin) {
     }
 
     saveZOffset(): void {
+        if (this.supportsLiveZOffsetSave) {
+            // Calculate from the current offset when the user confirms saving.
+            this.saveOffsetDialog = true
+            return
+        }
+
         let gcode = this.offsetZSaveOption
         if (gcode === null) gcode = this.autoSaveZOffsetOption
 
@@ -189,11 +217,23 @@ export default class ZoffsetControl extends Mixins(BaseMixin, ZoffsetMixin) {
         this.saveOffsetDialog = true
     }
 
-    saveConfig(): void {
-        const gcode = 'SAVE_CONFIG'
+    async saveConfig(): Promise<void> {
+        if (this.loadings.includes('zOffsetSaveConfig')) return
+
+        const gcode = this.supportsLiveZOffsetSave ? 'Z_OFFSET_SAVE_ENDSTOP' : 'SAVE_CONFIG'
         this.$store.dispatch('server/addEvent', { message: gcode, type: 'command' })
-        this.$socket.emit('printer.gcode.script', { script: gcode }, { loading: 'topbarSaveConfig' })
-        this.saveOffsetDialog = false
+        if (!this.supportsLiveZOffsetSave) {
+            this.$socket.emit('printer.gcode.script', { script: gcode }, { loading: 'topbarSaveConfig' })
+            this.saveOffsetDialog = false
+            return
+        }
+
+        try {
+            await this.$socket.emitAndWait('printer.gcode.script', { script: gcode }, { loading: 'zOffsetSaveConfig' })
+            this.saveOffsetDialog = false
+        } catch {
+            // The socket client reports the error; keep this dialog available.
+        }
     }
 }
 </script>

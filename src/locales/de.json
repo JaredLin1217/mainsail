@@ -1086,6 +1086,8 @@
             "Ok": "OK",
             "SaveConfig": "SAVE CONFIG",
             "SaveInfoDescription": "Der neue Z-Versatz wurde berechnet und registriert. Auf \"SAVE CONFIG\", klicken um den neuen Z-Versatz in der printer.cfg zu speichern und Klipper neu zu starten.",
+            "SaveInfoDescriptionNoRestart": "Z-Offset ohne Neustart von Klipper speichern. Der Drucker führt sofort eine Referenzfahrt aus, um ihn zu aktivieren.",
+            "SaveInfoDescriptionNoRestartPrint": "Z-Offset ohne Neustart von Klipper speichern. Der aktuelle Druck behält seinen bisherigen Offset bis zur nächsten Z-Referenzfahrt.",
             "SaveInfoDescriptionPrint": "Der neue Z-Versatz wurde berechnet und registriert. Nach dem Drucken auf \"SAVE CONFIG\" in der oberen Leiste klicken um den neuen Z-Versatz in der printer.cfg zu speichern und Klipper neu zu starten.",
             "SaveInfoHeadline": "Information"
         }

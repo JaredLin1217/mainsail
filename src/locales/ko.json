@@ -651,6 +651,8 @@
             "Ok": "네",
             "SaveConfig": "설정 저장",
             "SaveInfoDescription": "새 Z-옵셋을 측정 후 등록했습니다 저장하려면 우측 상단에서 \"설정 저장\"을 눌러 printer.cfg에 저장하고 클리퍼를 재시작 해주세요",
+            "SaveInfoDescriptionNoRestart": "Klipper를 다시 시작하지 않고 Z 오프셋을 저장합니다. 저장 후 즉시 원점 복귀를 수행하여 적용합니다.",
+            "SaveInfoDescriptionNoRestartPrint": "Klipper를 다시 시작하지 않고 Z 오프셋을 저장합니다. 현재 출력의 오프셋은 유지되며 다음 Z축 원점 복귀 시 적용됩니다.",
             "SaveInfoDescriptionPrint": "새 Z-옵셋을 측정 후 등록했습니다 우측 상단에서 \"설정 저장\"을 눌러 printer.cfg에 저장하고 클리퍼를 재시작 해주세요 ",
             "SaveInfoHeadline": "정보"
         }

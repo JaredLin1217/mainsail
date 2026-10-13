@@ -704,6 +704,8 @@
             "Ok": "Ok",
             "SaveConfig": "SAVE CONFIG",
             "SaveInfoDescription": "De nieuwe z-offset is berekend en geregistreerd. Klik op \"SAVE CONFIG\" om de nieuwe z-offset op te slaan in je printer.cf en Klipper te herstarten.",
+            "SaveInfoDescriptionNoRestart": "Sla de Z-offset op zonder Klipper opnieuw te starten. De printer voert direct homing uit om deze te activeren.",
+            "SaveInfoDescriptionNoRestartPrint": "Sla de Z-offset op zonder Klipper opnieuw te starten. De huidige print behoudt zijn offset tot de volgende homing van de Z-as.",
             "SaveInfoDescriptionPrint": "De nieuwe z-offset is berekend en geregistreerd. Klik na het printen op \"SAVE CONFIG\" om de nieuwe z-offset op te slaan in je printer.cf en Klipper te herstarten.",
             "SaveInfoHeadline": "Informatie"
         }

@@ -850,6 +850,8 @@
             "Ok": "OK",
             "SaveConfig": "ULOŽIT KONFIGURACI",
             "SaveInfoDescription": "Nový Z-offset byl vypočítán a uložen. Klikněte na tlačítko \"ULOŽIT KONFIGURACI\" pro uložení do printer.cfg a restart Klipperu.",
+            "SaveInfoDescriptionNoRestart": "Uložte posun Z bez restartování Klipperu. Tiskárna ihned provede návrat do výchozí polohy a aktivuje jej.",
+            "SaveInfoDescriptionNoRestartPrint": "Uložte posun Z bez restartování Klipperu. Aktuální tisk zachová původní posun až do příštího návratu osy Z do výchozí polohy.",
             "SaveInfoDescriptionPrint": "Nový Z-offset byl vypočítán a uložen. Po dokončení tisku klikněte na tlačítko \"ULOŽIT KONFIGURACI\" v horní liště pro uložení do printer.cfg a restart Klipperu.",
             "SaveInfoHeadline": "Informace"
         }

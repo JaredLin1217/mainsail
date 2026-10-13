@@ -733,6 +733,8 @@
             "Ok": "OK",
             "SaveConfig": "SPARA KONFIG",
             "SaveInfoDescription": "Den nya z-offset har beräknats och registrerats. Klicka på SAVE_CONFIG för att lagra den nya z-offset i din printer.cfg och starta om Klipper.",
+            "SaveInfoDescriptionNoRestart": "Spara Z-offset utan att starta om Klipper. Skrivaren kör omedelbart till hempositionen för att aktivera det.",
+            "SaveInfoDescriptionNoRestartPrint": "Spara Z-offset utan att starta om Klipper. Den pågående utskriften behåller sin offset tills nästa hemkörning av Z-axeln.",
             "SaveInfoDescriptionPrint": "Den nya Z-offseten har beräknats och registrerats. Efter utskrift, klicka på SAVE_CONFIG i den övre raden för att lagra den i printer.cfg och starta om Klipper.",
             "SaveInfoHeadline": "Information"
         }

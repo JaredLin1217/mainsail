@@ -755,6 +755,8 @@
             "Ok": "OK",
             "SaveConfig": "SALVAR CONFIG",
             "SaveInfoDescription": "O novo Z-Offset foi calculado e registrado. Clique em \"SALVAR CONFIG\" para salvá-lo no arquivo printer.cfg e reiniciar o Klipper.",
+            "SaveInfoDescriptionNoRestart": "Salve o deslocamento Z sem reiniciar o Klipper. A impressora fará imediatamente o homing para ativá-lo.",
+            "SaveInfoDescriptionNoRestartPrint": "Salve o deslocamento Z sem reiniciar o Klipper. A impressão atual mantém o deslocamento até o próximo homing do eixo Z.",
             "SaveInfoDescriptionPrint": "O novo Z-Offset foi calculado e registrado. Após a impressão, clique em \"SALVAR CONFIG\" na barra superior para salvá-lo no arquivo printer.cfg e reiniciar o Klipper.",
             "SaveInfoHeadline": "Informação"
         }

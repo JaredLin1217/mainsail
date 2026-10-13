@@ -1094,6 +1094,8 @@
             "Ok": "OK",
             "SaveConfig": "SAVE CONFIG",
             "SaveInfoDescription": "The new Z-Offset has been calculated and registered. Click on \"SAVE CONFIG\" to save it to the printer.cfg and restart Klipper.",
+            "SaveInfoDescriptionNoRestart": "Save the Z offset without restarting Klipper. The printer will home immediately to activate it.",
+            "SaveInfoDescriptionNoRestartPrint": "Save the Z offset without restarting Klipper. The current print keeps its existing offset until the next Z homing.",
             "SaveInfoDescriptionPrint": "The new Z-Offset has been calculated and registered. After printing, click on \"SAVE CONFIG\" in the top bar to save it to the printer.cfg and restart Klipper.",
             "SaveInfoHeadline": "Information"
         }

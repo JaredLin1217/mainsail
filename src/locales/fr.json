@@ -743,6 +743,8 @@
             "Ok": "OK",
             "SaveConfig": "SAVE CONFIG",
             "SaveInfoDescription": "Le nouveau décalage Z a été calculé et enregistré. Cliquez sur \"SAVE CONFIG\" pour l'enregistrer dans le fichier printer.cfg et redémarrer Klipper.",
+            "SaveInfoDescriptionNoRestart": "Enregistrez le décalage Z sans redémarrer Klipper. L'imprimante effectuera immédiatement une prise d'origine pour l'activer.",
+            "SaveInfoDescriptionNoRestartPrint": "Enregistrez le décalage Z sans redémarrer Klipper. L'impression en cours conserve son décalage jusqu'à la prochaine prise d'origine Z.",
             "SaveInfoDescriptionPrint": "Le nouveau décalage Z a été calculé et enregistré. Après l'impression, cliquez sur \"SAVE CONFIG\" dans la barre supérieure pour l'enregistrer dans le fichier printer.cfg et redémarrer Klipper.",
             "SaveInfoHeadline": "Information"
         }

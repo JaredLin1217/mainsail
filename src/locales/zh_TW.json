@@ -1090,10 +1090,12 @@
         "ZoffsetPanel": {
             "Clear": "清除",
             "Headline": "Z軸偏移",
-            "Later": "最後的",
+            "Later": "稍後",
             "Ok": "好",
             "SaveConfig": "儲存設定",
             "SaveInfoDescription": "已經計算生成新的Z偏移. 點擊 儲存設定 儲存到 printer.cfg 中並重啟 Klipper.",
+            "SaveInfoDescriptionNoRestart": "儲存 Z 偏移，不重啟 Klipper。儲存成功後立即歸零，啟用新原點。",
+            "SaveInfoDescriptionNoRestartPrint": "儲存 Z 偏移，不重啟 Klipper。列印或暫停時只保存，下一次 Z 軸歸零時啟用；目前列印補償保持不變。",
             "SaveInfoDescriptionPrint": "已經計算生成新的Z偏移. 列印後點擊 儲存設定 儲存到 printer.cfg 中並重啟 Klipper.",
             "SaveInfoHeadline": "資訊"
         }

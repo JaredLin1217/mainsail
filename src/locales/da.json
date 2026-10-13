@@ -797,6 +797,8 @@
             "Ok": "OK",
             "SaveConfig": "GEM KONFIGURATION",
             "SaveInfoDescription": "Det nye z-offset er blevet beregnet og registreret. Klik på \"GEM KONFIGURATION\" for at gemme det nye z-offset i CONFIG og genstarte Klipper.",
+            "SaveInfoDescriptionNoRestart": "Gem Z-offset uden at genstarte Klipper. Printeren kører straks til hjemmepositionen for at aktivere det.",
+            "SaveInfoDescriptionNoRestartPrint": "Gem Z-offset uden at genstarte Klipper. Den aktuelle udskrivning beholder sit offset indtil næste homing af Z-aksen.",
             "SaveInfoDescriptionPrint": "Det nye z-offset er blevet beregnet og registreret. Klik på \"GEM KONFIGURATION\" i topbaren efter endt print for at gemme det nye z-offset i CONFIG og genstarte Klipper.",
             "SaveInfoHeadline": "Information"
         }

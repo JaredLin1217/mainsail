@@ -1049,6 +1049,8 @@
             "Ok": "V redu",
             "SaveConfig": "SHRANI CONFIG",
             "SaveInfoDescription": "Novi Z-odmik je bil izračunan v začasni spomin. Kliknite 'SHRANI CONFIG', da se zapiše v printer.cfg, kar bo ponastavilo Klipper.",
+            "SaveInfoDescriptionNoRestart": "Shranite odmik Z brez ponovnega zagona Klipperja. Tiskalnik bo takoj izvedel pomik v izhodišče in ga uveljavil.",
+            "SaveInfoDescriptionNoRestartPrint": "Shranite odmik Z brez ponovnega zagona Klipperja. Trenutno tiskanje ohrani obstoječi odmik do naslednjega pomika osi Z v izhodišče.",
             "SaveInfoDescriptionPrint": "Novi Z-odmik je zabeležen. Po končanem tiskanju kliknite 'SHRANI CONFIG' v zgornji vrstici, da se trajno shrani.",
             "SaveInfoHeadline": "Obvestilo"
         }

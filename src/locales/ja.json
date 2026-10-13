@@ -650,6 +650,8 @@
             "Ok": "OK",
             "SaveConfig": "設定保存",
             "SaveInfoDescription": "新しいZ軸オフセットが計算され登録されました。\"設定保存\"をクリックするとprinter.cfgに保存して、Klipperを再始動します。",
+            "SaveInfoDescriptionNoRestart": "Klipperを再起動せずにZオフセットを保存します。保存後すぐに原点復帰を行い、新しい設定を適用します。",
+            "SaveInfoDescriptionNoRestartPrint": "Klipperを再起動せずにZオフセットを保存します。現在の印刷の補正は維持され、次回のZ軸原点復帰時に適用されます。",
             "SaveInfoDescriptionPrint": "新しいZ軸オフセットが計算され登録されました。印刷後、トップバーの\"設定保存\"をクリックするとprinter.cfgに保存して、Klipperを再始動します。",
             "SaveInfoHeadline": "情報"
         }

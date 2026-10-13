@@ -27,5 +27,11 @@
             }
         }
     },
+    "Panels": {
+        "ZoffsetPanel": {
+            "SaveInfoDescriptionNoRestart": "Uložte posun Z bez reštartovania Klippera. Tlačiareň ihneď vykoná návrat do východiskovej polohy a aktivuje ho.",
+            "SaveInfoDescriptionNoRestartPrint": "Uložte posun Z bez reštartovania Klippera. Aktuálna tlač zachová pôvodný posun až do ďalšieho návratu osi Z do východiskovej polohy."
+        }
+    },
     "title": "Slovenský"
 }

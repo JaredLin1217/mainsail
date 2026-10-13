@@ -1086,6 +1086,8 @@
             "Ok": "TAMAM",
             "SaveConfig": "KONFİGÜRASYONU KAYDET",
             "SaveInfoDescription": "Yeni Z-Offset hesaplandı ve kaydedildi. printer.cfg dosyasına kaydetmek ve Klipper'ı yeniden başlatmak için üst çubuktaki \"KONFİGÜRASYONU KAYDET\" düğmesine tıklayın.",
+            "SaveInfoDescriptionNoRestart": "Klipper'ı yeniden başlatmadan Z ofsetini kaydedin. Yazıcı, uygulamak için hemen başlangıç konumuna dönecektir.",
+            "SaveInfoDescriptionNoRestartPrint": "Klipper'ı yeniden başlatmadan Z ofsetini kaydedin. Mevcut baskı, bir sonraki Z başlangıç konumuna dönüşüne kadar mevcut ofseti korur.",
             "SaveInfoDescriptionPrint": "Yeni Z-Offset hesaplandı ve kaydedildi. Baskıdan sonra, printer.cfg dosyasına kaydetmek ve Klipper'ı yeniden başlatmak için üst çubuktaki \"KONFİGÜRASYONU KAYDET\" düğmesine tıklayın.",
             "SaveInfoHeadline": "Bilgi"
         }

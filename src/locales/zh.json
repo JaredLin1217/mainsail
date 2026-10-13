@@ -1094,6 +1094,8 @@
             "Ok": "好的",
             "SaveConfig": "保存配置",
             "SaveInfoDescription": "已经计算生成新的Z轴偏移。点击\"保存配置\"后会自动保存到printer.cfg中并重启Klipper。",
+            "SaveInfoDescriptionNoRestart": "保存 Z 偏移，不重启 Klipper。保存成功后立即归零，启用新原点。",
+            "SaveInfoDescriptionNoRestartPrint": "保存 Z 偏移，不重启 Klipper。打印或暂停时只保存，下一次 Z 轴归零时启用；当前打印补偿保持不变。",
             "SaveInfoDescriptionPrint": "已经计算生成新的Z轴偏移。打印完成后点击\"保存配置\"后会自动保存到printer.cfg中并重启Klipper。",
             "SaveInfoHeadline": "信息"
         }

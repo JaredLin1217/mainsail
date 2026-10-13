@@ -833,6 +833,8 @@
             "Ok": "Okej",
             "SaveConfig": "ZAPISZ KONFIGURACJĘ",
             "SaveInfoDescription": "Nowe przesunięcie Z zostało obliczone i zarejestrowane. Kliknij przycisk \"ZAPISZ KONFIGURACJĘ\", aby zapisać ją w pliku printer.cfg i zrestartować Klipper.",
+            "SaveInfoDescriptionNoRestart": "Zapisz przesunięcie Z bez ponownego uruchamiania Klippera. Drukarka natychmiast wykona bazowanie, aby je zastosować.",
+            "SaveInfoDescriptionNoRestartPrint": "Zapisz przesunięcie Z bez ponownego uruchamiania Klippera. Bieżący wydruk zachowa dotychczasowe przesunięcie do następnego bazowania osi Z.",
             "SaveInfoDescriptionPrint": "Nowe przesunięcie Z zostało obliczone i zarejestrowane. Po wydrukowaniu kliknij \"ZAPISZ KONFIGURACJĘ\" na górnym pasku, aby zapisać ją w pliku printer.cfg i zrestartować Klipper.",
             "SaveInfoHeadline": "Informacja"
         }
