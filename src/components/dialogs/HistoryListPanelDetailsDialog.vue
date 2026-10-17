@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="showDialog" :max-width="600" persistent @keydown.esc="closeDialog">
+    <v-dialog v-model="showDialog" :max-width="activeTab === 1 ? 1200 : 600" persistent @keydown.esc="closeDialog">
         <panel
             :title="$t('History.JobDetails').toString()"
             :icon="mdiUpdate"
@@ -10,8 +10,13 @@
                     <v-icon>{{ mdiCloseThick }}</v-icon>
                 </v-btn>
             </template>
+            <v-tabs v-model="activeTab" grow>
+                <v-tab>{{ $t('LayerHistory.Overview') }}</v-tab>
+                <v-tab>{{ $t('LayerHistory.Title') }}</v-tab>
+            </v-tabs>
             <v-card-text class="pa-0">
-                <overlay-scrollbars style="height: 350px" class="px-6">
+                <layer-history v-if="showDialog && activeTab === 1" :job="job" @deleted="closeDialog" />
+                <overlay-scrollbars v-else style="height: 350px" class="px-6">
                     <template v-for="(entry, index) in entries">
                         <v-divider v-if="index > 0" :key="'history_detail_entry_divider_' + index" class="my-3" />
                         <v-row :key="'history_detail_entry_' + index">
@@ -26,21 +31,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Prop, VModel } from 'vue-property-decorator'
+import { Component, Mixins, Prop, VModel, Watch } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
 import SettingsRow from '@/components/settings/SettingsRow.vue'
 import Panel from '@/components/ui/Panel.vue'
 import { ServerHistoryStateJob } from '@/store/server/history/types'
 import { mdiCloseThick, mdiUpdate } from '@mdi/js'
 import { formatFilesize, formatPrintTime } from '@/plugins/helpers'
+import LayerHistory from '@/components/panels/History/LayerHistory.vue'
+import layerHistoryMessages from '@/components/panels/History/layer-history.messages'
 
 @Component({
+    i18n: { messages: layerHistoryMessages, fallbackLocale: 'en' },
     components: {
+        LayerHistory,
         Panel,
         SettingsRow,
     },
 })
 export default class HistoryListPanelDetailsDialog extends Mixins(BaseMixin) {
+    activeTab = 0
     mdiCloseThick = mdiCloseThick
     mdiUpdate = mdiUpdate
 
@@ -49,6 +59,17 @@ export default class HistoryListPanelDetailsDialog extends Mixins(BaseMixin) {
 
     @VModel({ type: Boolean }) showDialog!: boolean
     @Prop({ type: Object, required: true }) readonly job!: ServerHistoryStateJob
+
+    get historyJobExists(): boolean {
+        return this.$store.state.server.history.jobs.some(
+            (job: ServerHistoryStateJob) => job.job_id === this.job.job_id && job.start_time === this.job.start_time
+        )
+    }
+
+    @Watch('historyJobExists')
+    historyJobChanged(exists: boolean): void {
+        if (!exists && this.showDialog) this.closeDialog()
+    }
 
     get entries() {
         const entries: { name: string; value: string | null; exists: boolean }[] = [

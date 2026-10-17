@@ -3,15 +3,20 @@ import { ActionTree } from 'vuex'
 import { ServerHistoryState, ServerHistoryStateJob } from '@/store/server/history/types'
 import { RootState } from '@/store/types'
 
+// Echo a client generation in requestParams. History requests that straddle a
+// clear must not repopulate the list after the deletion notification.
+let historyEpoch = 0
+
 export const actions: ActionTree<ServerHistoryState, RootState> = {
     reset({ commit }) {
+        historyEpoch++
         commit('reset')
     },
 
     init() {
         Vue.$socket.emit(
             'server.history.list',
-            { start: 0, limit: 50, max: 100 },
+            { start: 0, limit: 50, max: 100, history_epoch: historyEpoch },
             { action: 'server/history/getHistory' }
         )
         Vue.$socket.emit('server.history.totals', {}, { action: 'server/history/getTotals' })
@@ -21,12 +26,19 @@ export const actions: ActionTree<ServerHistoryState, RootState> = {
         commit('setTotals', payload.job_totals)
 
         const auxiliary_totals = payload.auxiliary_totals ?? []
-        if (auxiliary_totals.length) {
-            commit('setAuxiliaryTotals', auxiliary_totals)
-        }
+        commit('setAuxiliaryTotals', auxiliary_totals)
     },
 
     async getHistory({ commit, dispatch, state }, payload) {
+        const epoch = payload.requestParams?.history_epoch
+        if ((epoch != null && epoch !== historyEpoch) || (historyEpoch > 0 && epoch == null)) {
+            Vue.$socket.emit(
+                'server.history.list',
+                { ...payload.requestParams, history_epoch: historyEpoch },
+                { action: 'server/history/getHistory' }
+            )
+            return
+        }
         if ('requestParams' in payload && (payload.requestParams?.start ?? 0) === 0) commit('resetJobs')
 
         payload.jobs?.forEach((job: ServerHistoryStateJob) => {
@@ -44,6 +56,7 @@ export const actions: ActionTree<ServerHistoryState, RootState> = {
                     start: start + limit,
                     limit: limit,
                     max: max,
+                    history_epoch: historyEpoch,
                 },
                 { action: 'server/history/getHistory' }
             )
@@ -84,9 +97,13 @@ export const actions: ActionTree<ServerHistoryState, RootState> = {
         await dispatch('socket/removeInitModule', 'server/history/init', { root: true })
     },
 
-    getChanged({ commit }, payload) {
+    getChanged({ commit, dispatch }, payload) {
         if (payload.action === 'added') commit('addJob', payload.job)
         else if (payload.action === 'finished') commit('updateJob', payload.job)
+        else if (payload.action === 'deleted') {
+            historyEpoch++
+            dispatch('getDeletedJobs', payload)
+        }
 
         Vue.$socket.emit('server.history.totals', {}, { action: 'server/history/getTotals' })
     },
