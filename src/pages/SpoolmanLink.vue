@@ -14,6 +14,12 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 type SpoolmanLinkStatus = 'checking' | 'opening' | 'failed'
+type JsonObject = Record<string, unknown>
+
+function asJsonObject(value: unknown): JsonObject | null {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return null
+  return value as JsonObject
+}
 
 @Component
 export default class SpoolmanLink extends Vue {
@@ -97,8 +103,8 @@ export default class SpoolmanLink extends Vue {
     const fromConf = await this.resolveFromMoonrakerConf()
     if (fromConf) return this.normalizeUrl(fromConf)
 
-    const envUrl = (process.env as any)?.VUE_APP_SPOOLMAN_URL
-      || (import.meta as any)?.env?.VITE_SPOOLMAN_URL
+    const envUrl: unknown =
+      import.meta.env.VUE_APP_SPOOLMAN_URL ?? import.meta.env.VITE_SPOOLMAN_URL
     if (typeof envUrl === 'string' && envUrl) return this.normalizeUrl(envUrl)
 
     return this.normalizeUrl(`http://${location.hostname}:7912/`)
@@ -109,19 +115,26 @@ export default class SpoolmanLink extends Vue {
     try {
       const res = await fetch('/server/config')
       if (!res.ok) return null
-      const json = await res.json()
-      const cfg: any = (json && (json.result?.config ?? json.config ?? json)) || {}
+      const json: unknown = await res.json()
+      const jsonObject = asJsonObject(json)
+      const result = asJsonObject(jsonObject?.result)
+      const cfg = asJsonObject(result?.config ?? jsonObject?.config ?? json) ?? {}
+      const sections = asJsonObject(cfg.sections)
+      const nestedConfig = asJsonObject(cfg.config)
 
-      const candidates = [
-        cfg?.spoolman,
-        cfg?.['section spoolman'],
-        cfg?.sections?.spoolman,
-        cfg?.config?.spoolman,
+      const candidates: unknown[] = [
+        cfg.spoolman,
+        cfg['section spoolman'],
+        sections?.spoolman,
+        nestedConfig?.spoolman,
       ].filter(Boolean)
 
-      for (const c of candidates as any[]) {
-        const v = c?.server ?? c?.url
-        if (typeof v === 'string' && v.trim()) return v.trim()
+      for (const candidate of candidates) {
+        const candidateObject = asJsonObject(candidate)
+        if (!candidateObject) continue
+
+        const value = candidateObject.server ?? candidateObject.url
+        if (typeof value === 'string' && value.trim()) return value.trim()
       }
     } catch { /* ignore */ }
     return null
@@ -138,9 +151,10 @@ export default class SpoolmanLink extends Vue {
       try {
         const res = await fetch(url)
         if (!res.ok) continue
-        const data = await res.json()
-        const content: string | undefined =
-          data?.result?.contents ?? data?.contents ?? data?.result?.content
+        const data: unknown = await res.json()
+        const dataObject = asJsonObject(data)
+        const result = asJsonObject(dataObject?.result)
+        const content: unknown = result?.contents ?? dataObject?.contents ?? result?.content
         if (typeof content === 'string' && content) {
           const parsed = this.parseSpoolmanUrlFromIni(content)
           if (parsed) return parsed
@@ -152,14 +166,25 @@ export default class SpoolmanLink extends Vue {
     try {
       const res = await fetch('/server/files/list?root=config')
       if (res.ok) {
-        const json = await res.json()
-        const items: any[] = json?.result?.files ?? []
-        const found = items.find((f) => (f?.path || '').endsWith('moonraker.conf'))
-        if (found?.path) {
-          const res2 = await fetch(`/server/files/config?filename=${encodeURIComponent(found.path)}`)
+        const json: unknown = await res.json()
+        const jsonObject = asJsonObject(json)
+        const result = asJsonObject(jsonObject?.result)
+        const files = result?.files ?? jsonObject?.files
+        const items = Array.isArray(files) ? files : []
+        const found = items
+          .map(asJsonObject)
+          .find((file) => {
+            const path = file?.path
+            return typeof path === 'string' && path.endsWith('moonraker.conf')
+          })
+        const foundPath = found?.path
+        if (typeof foundPath === 'string') {
+          const res2 = await fetch(`/server/files/config?filename=${encodeURIComponent(foundPath)}`)
           if (res2.ok) {
-            const j2 = await res2.json()
-            const content: string | undefined = j2?.result?.contents ?? j2?.contents
+            const j2: unknown = await res2.json()
+            const j2Object = asJsonObject(j2)
+            const j2Result = asJsonObject(j2Object?.result)
+            const content: unknown = j2Result?.contents ?? j2Object?.contents
             if (typeof content === 'string' && content) {
               const parsed = this.parseSpoolmanUrlFromIni(content)
               if (parsed) return parsed
