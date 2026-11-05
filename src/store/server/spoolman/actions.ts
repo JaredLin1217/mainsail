@@ -4,8 +4,11 @@ import { RootState } from '@/store/types'
 import { ServerSpoolmanState } from '@/store/server/spoolman/types'
 
 function convertV2response(payload: { error?: { message: string } | null; response?: unknown }) {
-    if ((payload.error?.message ?? null) !== null) {
-        Vue.$toast.error(payload.error?.message ?? 'unknown spoolman error')
+    const errorMessage = payload.error?.message ?? null
+    if (errorMessage !== null) {
+        // An unreachable optional Spoolman server is expected when Spoolman is offline.
+        // Keep the failure out of the toast queue while preserving all other errors.
+        if (errorMessage !== 'Spoolman server not available') Vue.$toast.error(errorMessage)
         return null
     }
 
