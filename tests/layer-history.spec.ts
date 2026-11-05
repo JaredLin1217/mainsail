@@ -11,7 +11,7 @@ vi.mock('@/plugins/helpers', () => ({ formatPrintTime: String }))
 vi.mock('echarts/core', () => ({ connect: vi.fn(), disconnect: vi.fn(), use: vi.fn() }))
 
 type Method = (...args: never[]) => unknown
-type Context = LayerHistory & { $socket: { emitAndWait: ReturnType<typeof vi.fn> } }
+type Context = Vue & { $socket: { emitAndWait: ReturnType<typeof vi.fn> } } & Record<string, any>
 type StoreContext = { commit: ReturnType<typeof vi.fn>; dispatch: ReturnType<typeof vi.fn>; state: { jobs: object[] } }
 type HistoryActions = {
     init: () => void
@@ -135,7 +135,7 @@ describe('layer history presentation', () => {
             rows: [row(2, 950)],
         })
         await vm.refresh(true)
-        expect(vm.seriesRows.map((item) => item.layer)).toEqual([1, 2])
+        expect(vm.seriesRows.map((item: ReturnType<typeof row>) => item.layer)).toEqual([1, 2])
         expect(vm.seriesRows[1].metrics.t1.mean).toBe(950)
     })
 })
